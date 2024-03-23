@@ -43,40 +43,42 @@ class Benefits(BaseModel):
 
 
 class JobDescription(BaseModel):
-    title: str = Field(description="The official title of the job position.")
-    company_information: str = Field(
-        description="Overview of the company, including its mission, values, and industry.",
-        default="",
+    title: Optional[str] = Field(
+        default="", description="The official title of the job position."
     )
-    location: str = Field(
+    company_information: Optional[str] = Field(
+        default="",
+        description="Overview of the company, including its mission, values, and industry.",
+    )
+    location: Optional[str] = Field(
+        default="",
         description="The primary location of the job, including city, state, and country.",
         examples=["San Francisco, CA, USA", "Remote", "Montreal, QC, Canada"],
-        default="",
     )
 
-    years_of_experience: str = Field(
+    years_of_experience: Optional[str] = Field(
+        default="",
         description="The number of years of experience required for the job.",
         examples=["3-5 years", "5+ years", "Entry level"],
-        default="",
     )
 
-    education: str = Field(
+    education: Optional[str] = Field(
+        default="",
         description="The educational background required for the job, such as a Bachelor's degree or equivalent experience.",
         examples=[
             "Bachelor's degree in Computer Science",
             "Master's degree in Business Administration",
         ],
-        default="",
     )
 
-    salary_range: str = Field(
-        description="The salary range for the job, if available. This can be a specific number or a range, such as $50,000 - $60,000 per year.",
+    salary_range: Optional[str] = Field(
         default="",
+        description="The salary range for the job, if available. This can be a specific number or a range, such as $50,000 - $60,000 per year.",
     )
 
     responsibilities: Optional[list[Responsibility]] = Field(
-        description="A list of key responsibilities associated with the job, detailing regular tasks and expectations.",
         default=[],
+        description="A list of key responsibilities associated with the job, detailing regular tasks and expectations.",
     )
 
     qualifications: Optional[list[Qualification]] = Field(
@@ -84,12 +86,12 @@ class JobDescription(BaseModel):
         description="A list of qualifications necessary for the job, including educational background, skills, and other requirements.",
     )
 
-    experience: list[Experience] = Field(
+    experience: Optional[list[Experience]] = Field(
         default=[],
         description="A list of experience requirements, specifying the necessary background and expertise in related fields.",
     )
 
-    benefits: Optional[list[str]] = Field(
+    benefits: Optional[list[Benefits]] = Field(
         default=[],
         description="A list of benefits offered with the job, such as competitive salary and benefits package, career growth opportunities, global work environment, and innovative and challenging projects.",
     )
@@ -99,12 +101,12 @@ class JobDescription(BaseModel):
         description="Description of the company culture, highlighting values, work environment, and team dynamics.",
     )
 
-    skills: list[Skill] = Field(
+    skills: Optional[list[Skill]] = Field(
         default=[],
         description="A list of skills required for the job, as identified in the job description.",
     )
 
-    additional_requirements: list[str] = Field(
+    additional_requirements: Optional[list[str]] = Field(
         default=[],
         description="Any additional requirements or preferences for the job that don't fall into the standard categories, such as specific software knowledge, language skills, or personal attributes.",
     )

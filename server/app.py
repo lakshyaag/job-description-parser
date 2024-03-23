@@ -1,13 +1,14 @@
+import logging
 import os
 
 import instructor
 import uvicorn
 from dotenv import find_dotenv, load_dotenv
 from fastapi import FastAPI, HTTPException
+from fastapi.exceptions import ResponseValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from models import JobDescription, RequestPayload
 from openai import AsyncOpenAI
-
-import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("API Client")
@@ -21,6 +22,14 @@ llm_client = instructor.patch(
 )
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=True,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 async def call(
@@ -44,20 +53,27 @@ async def call(
 
 @app.post("/jd/", response_model=JobDescription)
 async def process_job_description(request: RequestPayload) -> JobDescription:
-    messages = [
-        {
-            "role": "system",
-            "content": """Extract information from the job description. 
-            If any information is missing or can not be found, do not attempt to generate it. 
-            Simply provide the information that is available. DO NOT make up any information.
-            """,
-        },
-        {"role": "user", "content": request.job_description},
-    ]
+    try:
+        messages = [
+            {
+                "role": "system",
+                "content": """Extract information from the job description. 
+                If any information is missing or can not be found, do not attempt to generate it. 
+                Simply provide the information that is available. DO NOT make up any information.
+                """,
+            },
+            {"role": "user", "content": request.job_description},
+        ]
 
-    response = call(llm_client, JobDescription, messages, model="gpt-4-turbo-preview")
+        response = await call(
+            llm_client, JobDescription, messages, model="gpt-3.5-turbo"
+        )
 
-    return response
+        return response
+
+    except ResponseValidationError as e:
+        logger.error(f"Error: {e}")
+        raise HTTPException(status_code=400, detail=f"Bad Request. {str(e)}")
 
 
 @app.get("/")
