@@ -36,7 +36,7 @@ async def call(
     llm_client: AsyncOpenAI, response_model, messages, model="gpt-3.5-turbo"
 ):
     try:
-        logger.info("Sending request to model...")
+        logger.info(f"Sending request to model {model}...")
 
         response = await llm_client.chat.completions.create(
             model=model,

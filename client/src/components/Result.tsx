@@ -4,12 +4,8 @@ import { JobDescription } from "@/lib/types";
 import { NextPage } from "next";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Accordion } from "@/components/ui/accordion";
+import JobDescriptionSection from "./JobDescriptionSection";
 
 interface ResultProps {
   jobDescription: JobDescription;
@@ -17,9 +13,9 @@ interface ResultProps {
 
 export const Result: NextPage<ResultProps> = ({ jobDescription }) => {
   return (
-    <div className="flex flex-col gap-4 w-full md:w-1/2 h-full">
-      <p className="text-md max-w-lg font-bold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl lg:text-2xl">
-        Results
+    <div className="flex flex-col gap-4 w-full md:w-1/2 ">
+      <p className="text-md font-bold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl lg:text-2xl">
+        Detailed Breakdown
       </p>
 
       <div className="flex flex-col gap-4">
@@ -30,112 +26,53 @@ export const Result: NextPage<ResultProps> = ({ jobDescription }) => {
               {jobDescription.salary_range && (
                 <Badge>{jobDescription.salary_range}</Badge>
               )}
-              <Badge variant={"outline"}>{jobDescription.industry}</Badge>
-              <Badge>{jobDescription.location}</Badge>
-              <Badge variant={"secondary"}>
-                {jobDescription.years_of_experience}
-              </Badge>
+              {jobDescription.industry && (
+                <Badge variant={"outline"}>{jobDescription.industry}</Badge>
+              )}
+              {jobDescription.location && (
+                <Badge>{jobDescription.location}</Badge>
+              )}
+              {jobDescription.years_of_experience && (
+                <Badge variant={"secondary"}>
+                  {jobDescription.years_of_experience}
+                </Badge>
+              )}
             </div>
           </Card>
 
           <Accordion type="single" collapsible>
-            {jobDescription.company_information && (
-              <AccordionItem value="company_information">
-                <AccordionTrigger>Company Information</AccordionTrigger>
-                <AccordionContent>
-                  <p>{jobDescription.company_information}</p>
-                </AccordionContent>
-              </AccordionItem>
-            )}
-
-            {jobDescription.education && (
-              <AccordionItem value="education">
-                <AccordionTrigger>Education</AccordionTrigger>
-                <AccordionContent>
-                  <p>{jobDescription.education}</p>
-                </AccordionContent>
-              </AccordionItem>
-            )}
-
-            {jobDescription.responsibilities && (
-              <AccordionItem value="responsibilities">
-                <AccordionTrigger>Responsibilities</AccordionTrigger>
-                <AccordionContent>
-                  <ul>
-                    {jobDescription.responsibilities.map((item) => (
-                      <li key={item.index}>{item.description}</li>
-                    ))}
-                  </ul>
-                </AccordionContent>
-              </AccordionItem>
-            )}
-
-            {jobDescription.qualifications && (
-              <AccordionItem value="qualifications">
-                <AccordionTrigger>Qualifications</AccordionTrigger>
-                <AccordionContent>
-                  <ul>
-                    {jobDescription.qualifications.map((item) => (
-                      <li key={item.index}>{item.description}</li>
-                    ))}
-                  </ul>
-                </AccordionContent>
-              </AccordionItem>
-            )}
-
-            {jobDescription.experience && (
-              <AccordionItem value="experience">
-                <AccordionTrigger>Experience</AccordionTrigger>
-                <AccordionContent>
-                  <ul>
-                    {jobDescription.experience.map((item) => (
-                      <li key={item.index}>{item.description}</li>
-                    ))}
-                  </ul>
-                </AccordionContent>
-              </AccordionItem>
-            )}
-
-            {jobDescription.benefits && (
-              <AccordionItem value="benefits">
-                <AccordionTrigger>Benefits</AccordionTrigger>
-                <AccordionContent>
-                  <ul>
-                    {jobDescription.benefits.map((item) => (
-                      <li key={item.index}>{item.description}</li>
-                    ))}
-                  </ul>
-                </AccordionContent>
-              </AccordionItem>
-            )}
-
-            {jobDescription.skills && (
-              <AccordionItem value="skills">
-                <AccordionTrigger>Skills</AccordionTrigger>
-                <AccordionContent>
-                  <ul>
-                    {jobDescription.skills.map((item) => (
-                      <li key={item.index}>
-                        <strong>{item.type}</strong>: {item.description}
-                      </li>
-                    ))}
-                  </ul>
-                </AccordionContent>
-              </AccordionItem>
-            )}
-
-            {jobDescription.additional_requirements && (
-              <AccordionItem value="additional_requirements">
-                <AccordionTrigger>Additional Requirements</AccordionTrigger>
-                <AccordionContent>
-                  <ul>
-                    {jobDescription.additional_requirements.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </AccordionContent>
-              </AccordionItem>
-            )}
+            <JobDescriptionSection
+              title="Company Information"
+              content={jobDescription.company_information}
+            />
+            <JobDescriptionSection
+              title="Education"
+              content={jobDescription.education}
+            />
+            <JobDescriptionSection
+              title="Responsibilities"
+              content={jobDescription.responsibilities}
+            />
+            <JobDescriptionSection
+              title="Qualifications"
+              content={jobDescription.qualifications}
+            />
+            <JobDescriptionSection
+              title="Experience"
+              content={jobDescription.experience}
+            />
+            <JobDescriptionSection
+              title="Benefits"
+              content={jobDescription.benefits}
+            />
+            <JobDescriptionSection
+              title="Skills"
+              content={jobDescription.skills}
+            />
+            <JobDescriptionSection
+              title="Additional Requirements"
+              content={jobDescription.additional_requirements}
+            />
           </Accordion>
         </div>
       </div>

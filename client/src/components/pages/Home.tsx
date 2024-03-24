@@ -1,14 +1,10 @@
 "use client";
 
 import { NextPage } from "next";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "../ui/textarea";
 import { useState } from "react";
-import { analyze } from "@/app/api/analyze";
-import { JobDescription, RequestPayload } from "@/lib/types";
+import { JobDescription } from "@/lib/types";
 import Form from "../Form";
 import Result from "../Result";
-import { Skeleton } from "../ui/skeleton";
 import Loading from "../Loading";
 
 const Home: NextPage = () => {
@@ -32,7 +28,7 @@ const Home: NextPage = () => {
       </section>
 
       <section className="h-4/5 w-full py-4">
-        <div className="container mx-auto flex flex-col md:flex-row h-full justify-between items-start md:items-center px-4 md:px-6 gap-8">
+        <div className="container mx-auto flex flex-col md:flex-row h-full justify-between items-start px-4 md:px-6 gap-8">
           <Form
             setResultData={setResultData}
             setIsLoading={setIsLoading}

@@ -38,8 +38,8 @@ const Form: NextPage<FormProps> = ({
   };
 
   return (
-    <div className="flex flex-col gap-4 w-full md:w-1/2 h-full">
-      <p className="text-lg max-w-lg font-bold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl lg:text-2xl">
+    <div className="flex flex-col gap-4 w-full md:w-1/2">
+      <p className="text-lg font-bold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl lg:text-2xl">
         Paste your job description here
       </p>
       <Textarea

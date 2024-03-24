@@ -16,5 +16,5 @@ export interface JobDescription {
   benefits?: { index: number; description: string }[] | null;
   culture?: string;
   skills?: { index: number; type: string; description: string }[] | null;
-  additional_requirements?: string[] | null;
+  additional_requirements?: { index: number; description: string }[] | null;
 }

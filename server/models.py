@@ -39,6 +39,13 @@ class Benefits(BaseModel):
     )
 
 
+class AddlRequirements(BaseModel):
+    index: int = Field(description="Unique identifier for the additional requirement.")
+    description: str = Field(
+        description="Description of the additional requirement, such as specific software knowledge, language skills, or personal attributes.",
+    )
+
+
 class JobDescription(BaseModel):
     title: Optional[str] = Field(
         default="",
@@ -115,7 +122,7 @@ class JobDescription(BaseModel):
         description="A list of skills required for the job, as identified in the job description.",
     )
 
-    additional_requirements: Optional[list[str]] = Field(
+    additional_requirements: Optional[list[AddlRequirements]] = Field(
         default=[],
         description="Any additional requirements or preferences for the job that don't fall into the standard categories, such as specific software knowledge, language skills, or personal attributes.",
     )

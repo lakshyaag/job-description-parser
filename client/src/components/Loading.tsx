@@ -5,10 +5,10 @@ import { Skeleton } from "./ui/skeleton";
 
 const Loading: NextPage = () => {
   return (
-    <div className="flex items-center justify-center w-[50%]">
+    <div className="flex flex-col gap-4 w-full md:w-1/2 ">
       <div className="w-full space-y-2">
-        <Skeleton className="h-12 w-full" />
-        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-48 w-full" />
+        <Skeleton className="h-32 w-full" />
       </div>
     </div>
   );
