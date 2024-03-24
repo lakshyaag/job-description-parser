@@ -37,19 +37,28 @@ class Benefits(BaseModel):
     description: str = Field(
         description="Description of the benefit offered, such as health insurance, retirement plans, and work-life balance perks.",
     )
-    salary: Optional[str] = Field(
-        description="The salary range for the job, if available. This can be a specific number or a range, such as $50,000 - $60,000 per year.",
-    )
 
 
 class JobDescription(BaseModel):
     title: Optional[str] = Field(
-        default="", description="The official title of the job position."
+        default="",
+        description="The official title of the job position.",
+        examples=["ACME Corporation"],
     )
     company_information: Optional[str] = Field(
         default="",
         description="Overview of the company, including its mission, values, and industry.",
+        examples=[
+            "ACME Corporation is a leading provider of innovative solutions in the tech industry."
+        ],
     )
+
+    industry: Optional[str] = Field(
+        default="",
+        description="The industry or sector in which the company operates.",
+        examples=["Technology", "Finance", "Healthcare"],
+    )
+
     location: Optional[str] = Field(
         default="",
         description="The primary location of the job, including city, state, and country.",

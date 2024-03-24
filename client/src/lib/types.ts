@@ -5,6 +5,7 @@ export interface RequestPayload {
 export interface JobDescription {
   title?: string;
   company_information?: string;
+  industry?: string;
   location?: string;
   years_of_experience?: string;
   education?: string;
@@ -12,7 +13,7 @@ export interface JobDescription {
   responsibilities?: { index: number; description: string }[] | null;
   qualifications?: { index: number; description: string }[] | null;
   experience?: { index: number; description: string }[] | null;
-  benefits?: { index: number; description: string; salary?: string }[] | null;
+  benefits?: { index: number; description: string }[] | null;
   culture?: string;
   skills?: { index: number; type: string; description: string }[] | null;
   additional_requirements?: string[] | null;
