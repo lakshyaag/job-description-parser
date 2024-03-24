@@ -7,12 +7,13 @@ import { cn } from "@/lib/utils";
 
 import "@/lib/styles/globals.css";
 
-const APP_NAME = "JobFind";
+const APP_NAME = "Job Description Parser";
 const APP_DESCRIPTION = "Simplify your job search in seconds.";
 
 export const metadata: Metadata = {
   title: APP_NAME,
   description: APP_DESCRIPTION,
+
   applicationName: APP_NAME,
   appleWebApp: {
     capable: true,
@@ -21,6 +22,12 @@ export const metadata: Metadata = {
   },
   formatDetection: {
     telephone: false,
+  },
+
+  openGraph: {
+    url: "https://job-description-parser.vercel.app/",
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
   },
 
   twitter: {
