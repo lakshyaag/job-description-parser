@@ -16,10 +16,10 @@ const Home: NextPage = () => {
       <section className="h-1/5 w-full py-4">
         <div className="container mx-auto flex h-full items-center justify-center px-8 md:px-12 text-center gap-4">
           <div>
-            <p className="text-2xl font-bold text-gray-800 dark:text-gray-200 sm:text-3xl md:text-4xl">
+            <p className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-400 dark:from-purple-300 dark:to-pink-200 sm:text-3xl md:text-4xl">
               Simplify your job search in seconds.
             </p>
-            <p className="text-gray-500 dark:text-gray-400 md:text-xl">
+            <p className="text-gray-500 dark:text-gray-400 md:text-lg">
               Paste your job description and get a detailed breakdown of
               everything you need to know.
             </p>

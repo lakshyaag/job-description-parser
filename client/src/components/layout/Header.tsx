@@ -5,7 +5,7 @@ import Github from "../GitHub";
 
 const Header = () => {
   return (
-    <header className="bg-base-100/80 sticky top-0 z-10 mx-2 my-4 px-16 py-4 backdrop-blur-lg">
+    <header className="bg-base-100/80 sticky top-0 z-10 mx-2 my-4 px-16 py-4 backdrop-blur-lg border-b border-gray-200">
       <section className="mx-auto gap-4 flex flex-col items-center justify-between py-2 md:flex-row">
         <div className="flex items-center">
           <Link href="/">

@@ -9,6 +9,10 @@ import { Button } from "./ui/button";
 import { LoadingSpinner } from "./LoadingSpinner";
 import { result_data } from "@/lib/utils";
 
+import { createClient } from "@/lib/supabase/client";
+import { useToast } from "./ui/use-toast";
+import { insertJobDescription } from "@/app/api/supabaseService";
+
 interface FormProps {
   setResultData: Dispatch<SetStateAction<JobDescription | undefined>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
@@ -20,10 +24,19 @@ const Form: NextPage<FormProps> = ({
   setIsLoading,
   isLoading,
 }) => {
-  const [jobDescription, setJobDescription] = useState<string>();
+  const supabase = createClient();
+  const { toast } = useToast();
+
+  const [jobDescription, setJobDescription] = useState<string>("");
 
   const handleSubmit = async () => {
     setIsLoading(true);
+
+    toast({
+      title: "Analyzing job description...",
+      description: "Please wait while we analyze your job description.",
+      variant: "default",
+    });
 
     const payload: RequestPayload = {
       job_description: jobDescription,
@@ -33,6 +46,18 @@ const Form: NextPage<FormProps> = ({
 
     setResultData(data);
     // setResultData(result_data)
+
+    try {
+      await insertJobDescription(jobDescription, data);
+      console.log("Successfully saved query response to database.");
+    } catch (error) {
+      console.error("Failed to save query response to database:", error);
+      toast({
+        title: "Error",
+        description: "Failed to save your query. Please try again.",
+        variant: "destructive",
+      });
+    }
 
     setIsLoading(false);
   };
