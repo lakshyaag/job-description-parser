@@ -42,6 +42,7 @@ async def call(
             model=model,
             response_model=response_model,
             messages=messages,
+            temperature=0.0,
         )
 
         return response
@@ -66,7 +67,7 @@ async def process_job_description(request: RequestPayload) -> JobDescription:
         ]
 
         response = await call(
-            llm_client, JobDescription, messages, model="gpt-4-turbo-preview"
+            llm_client, JobDescription, messages, model="gpt-3.5-turbo"
         )
 
         return response
