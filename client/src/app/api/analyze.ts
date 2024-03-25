@@ -1,7 +1,9 @@
-import { RequestPayload } from "@/lib/types";
+import { JobDescription, RequestPayload } from "@/lib/types";
 import { API_URL } from "@/lib/utils";
 
-export const analyze = async (payload: RequestPayload) => {
+export const analyze = async (
+  payload: RequestPayload
+): Promise<JobDescription> => {
   try {
     const response = await fetch(`${API_URL}/jd/`, {
       method: "POST",
