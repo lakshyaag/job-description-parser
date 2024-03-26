@@ -1,6 +1,7 @@
 fastapi==0.110.0
 instructor==0.6.7
-openai==1.14.2
+openai==1.14.3
 pydantic==2.6.4
 python-dotenv==1.0.1
+tenacity==8.2.3
 uvicorn==0.29.0

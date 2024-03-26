@@ -107,7 +107,6 @@ class JobDescription(BaseModel):
     company_information: str = Field(
         description="Information about the company.",
         example="ACME Corp is a leading innovator in the tech industry.",
-        max_length=750,
     )
     industry: Optional[str] = Field(
         description="The industry sector the job belongs to.", example="Technology"

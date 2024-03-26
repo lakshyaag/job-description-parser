@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from models import JobDescription, RequestPayload
 from openai import AsyncOpenAI
 from prompts import messages
+from tenacity import retry, stop_after_attempt, wait_fixed
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("API Client")
@@ -54,6 +55,7 @@ async def call(
 
 
 @app.post("/jd/", response_model=JobDescription)
+@retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
 async def process_job_description(
     request: RequestPayload, model: str = "gpt-4-turbo-preview"
 ) -> JobDescription:
