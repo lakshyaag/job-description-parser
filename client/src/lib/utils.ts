@@ -11,153 +11,195 @@ export const API_URL =
     : "http://localhost:8000";
 
 export const result_data = {
-  title: "CN - Expert Solution Designer",
+  title: "Senior Application Support Analyst",
   company_information:
-    "CN is a world-class transportation leader and trade-enabler, safely transporting more than 300 million tons of natural resources, manufactured products, and finished goods throughout North America every year. CN and its affiliates have been contributing to community prosperity and sustainable trade since 1919, committed to social responsibility and environmental stewardship. The company values safety, sustainability, and operational excellence.",
-  industry: "Transportation",
-  location: "North America",
-  years_of_experience: "10+ years",
-  education:
-    "Bachelor’s degree in Business, Computer Science, Computer Engineering, Electrical Engineering, or a related field of study, or equivalent work experience",
-  salary_range: "",
+    "At RBC, we are committed to innovation, growth, and providing trusted advice to help our clients thrive and communities prosper. We embrace diversity and inclusion, tackle issues of inequity and systemic bias, and strive to create an equitable workplace. Our mission is to enhance the well-being of our clients and communities. RBC operates in the financial services industry, offering a range of advice, products, and services, including personal and commercial banking, wealth management, corporate and investment banking, and capital markets.",
+  industry: "Financial Services",
+  location: "Toronto, Canada",
+  job_type: "Full-time",
+  years_of_experience_required: 5,
+  years_of_experience_preferred: 9,
+  education: [
+    {
+      level: "Bachelor's Degree",
+      field_of_study: "Computer Science",
+    },
+  ],
+  salary_range: "$80,000 - $120,000",
   responsibilities: [
     {
       index: 1,
       description:
-        "Contribute to the technical architecture by identifying existing capabilities in Security, Single sign-on, access management, networking, and data exchange.",
+        "Provide L3 production support, monitoring the health and security posture of applications.",
     },
     {
       index: 2,
       description:
-        "Translate technical architecture into detailed infrastructure and technology design, ensuring seamless integration.",
+        "Investigate, troubleshoot, and resolve incidents and compliance issues.",
     },
     {
       index: 3,
       description:
-        "Collaborate with project managers to define work breakdown structure, estimate effort, and project schedule.",
+        "Contribute to technical specifications and program reviews.",
     },
     {
       index: 4,
       description:
-        "Guide SMEs through technical design propositions, addressing design or support issues.",
+        "Develop and maintain relationships with business and technology partners.",
     },
     {
       index: 5,
       description:
-        "Present and explain designs/solutions to different stakeholder groups.",
+        "Collaborate with development teams to identify defects and opportunities for efficiency.",
     },
     {
       index: 6,
       description:
-        "Participate in Security foundation programs and vendors selection for technical aspects of solutions.",
+        "Leverage automation and monitoring tools for issue resolution.",
     },
     {
       index: 7,
       description:
-        "Define and maintain engineering and configuration standards, ensuring compliance with CN standards.",
+        "Raise support tickets and work with vendors for additional support.",
     },
     {
       index: 8,
       description:
-        "Engage external providers, manage hardware/software roadmap based on CN strategy and technology needs.",
+        "Facilitate meetings for problem solving and decision making.",
     },
     {
       index: 9,
       description:
-        "Estimate solution costs, create detailed design documentation, and identify deployment steps and risks.",
+        "Provide direction, feedback, and development to junior staff.",
     },
     {
       index: 10,
-      description:
-        "Pre-configure and lab-test components prior to deployment, documenting tests and results.",
+      description: "Offer on-call afterhours support.",
     },
   ],
-  qualifications: [
+  qualifications_required: [
     {
       index: 1,
       description:
-        "Proven experience delivering technology projects involving multiple parties.",
+        "5+ years of experience in production support and supporting multiple applications.",
     },
     {
       index: 2,
       description:
-        "Strong knowledge of cloud platforms (Azure, AWS, GCP), authentication/SSO protocols, and networking.",
+        "Experience with Linux platform, DataStage, SQL, Oracle Server, MS SQL server, Shell scripts.",
     },
     {
       index: 3,
-      description:
-        "Experience in design and implementation of Cloud-based solutions and practices (3-5 years).",
+      description: "Strong analytical and communication skills.",
     },
     {
       index: 4,
       description:
-        "Continuous learning to stay updated with the latest technology innovations and roadmaps in Security technologies and IT Infrastructure.",
+        "Working knowledge of IT Standards, Methodologies, SDLC, & audit requirements.",
     },
   ],
-  experience: [
+  qualifications_preferred: [
     {
       index: 1,
       description:
-        "10+ years of general knowledge of IT infrastructure and networking.",
+        "Knowledge in Mainframe z/OS technologies such as JCL, TSO/ISPF, On Demand, ZEKE, RACF.",
+    },
+    {
+      index: 2,
+      description: "Knowledge in Apache Airflow, Python, Smartstream TLM.",
+    },
+  ],
+  experience: [],
+  benefits: [
+    {
+      index: 1,
+      description:
+        "A comprehensive Total Rewards Program including bonuses and flexible benefits.",
     },
     {
       index: 2,
       description:
-        "3-5 years of experience in design and implementation of Cloud-based solutions and practices.",
-    },
-  ],
-  benefits: [],
-  culture: "",
-  skills: [
-    {
-      index: 1,
-      type: "Technical",
-      description: "Very good technical documentation skills.",
-    },
-    {
-      index: 2,
-      type: "Communication",
-      description:
-        "Very good communication, influencing, and presentation skills.",
+        "Leadership support through coaching and mentoring opportunities.",
     },
     {
       index: 3,
-      type: "Leadership",
-      description:
-        "Leadership skills to guide others on integration and technical matters.",
+      description: "Opportunity for development and impact.",
     },
     {
       index: 4,
-      type: "Problem-Solving",
-      description:
-        "Ability to clarify requirements and ensure solutions meet business needs.",
+      description: "A world-class training program in financial services.",
     },
     {
       index: 5,
-      type: "Engineering",
-      description: "Strong systems engineering knowledge.",
+      description: "Supportive management and challenging work.",
     },
     {
       index: 6,
-      type: "Management",
       description:
-        "Ability to estimate efforts and costs for delivery, prioritize deadlines, and manage teams.",
+        "Opportunity to take on progressively greater responsibilities.",
+    },
+  ],
+  culture:
+    "RBC fosters an inclusive and high-performing culture, committed to results, innovation, and growth. We value diversity, inclusion, and the unique skills and experiences each individual brings. Our culture is focused on enhancing the well-being of our clients and communities, with a commitment to building inclusive teams and an equitable workplace.",
+  skills_required: [
+    {
+      index: 1,
+      type: "Technical",
+      description: "Linux",
+    },
+    {
+      index: 2,
+      type: "Technical",
+      description: "DataStage",
+    },
+    {
+      index: 3,
+      type: "Technical",
+      description: "SQL",
+    },
+    {
+      index: 4,
+      type: "Technical",
+      description: "Oracle Server",
+    },
+    {
+      index: 5,
+      type: "Technical",
+      description: "MS SQL server",
+    },
+    {
+      index: 6,
+      type: "Technical",
+      description: "Shell scripts",
     },
     {
       index: 7,
-      type: "Process",
-      description:
-        "Process-driven mindset, improving team processes when needed.",
+      type: "Soft",
+      description: "Analytical Thinking",
+    },
+  ],
+  skills_preferred: [
+    {
+      index: 1,
+      type: "Technical",
+      description: "Apache Airflow",
     },
     {
-      index: 8,
-      type: "Language",
-      description:
-        "Excellent French and English proficiency in spoken and written forms.",
+      index: 2,
+      type: "Technical",
+      description: "Python",
+    },
+    {
+      index: 3,
+      type: "Technical",
+      description: "Smartstream TLM",
     },
   ],
-  additional_requirements: [
-    "Proven experience with IP protocols and IT security principles.",
-    "Knowledge of Microsoft AD Federation Services (ADFS), Microsoft Azure cloud platform, Google Cloud Platform, and 3rd party SaaS solutions.",
-  ],
+  additional_requirements: [],
+  contact_information: {
+    email: null,
+    telephone: null,
+    website: "jobs.rbc.com",
+    other: null,
+  },
 };

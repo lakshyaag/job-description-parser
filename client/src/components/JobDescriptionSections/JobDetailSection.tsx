@@ -5,28 +5,36 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 
+type ContentItem = { index: number; description: string };
+
 interface JobDescriptionSectionProps {
   title: string;
-  content: string | { index: number; description: string }[] | null | undefined;
+  content: ContentItem[];
 }
 
 const JobDescriptionSection: React.FC<JobDescriptionSectionProps> = ({
   title,
   content,
 }) => {
-  if (!content) return null;
+  if (!content || content.length === 0) return null;
 
   const renderContent = () => {
-    if (typeof content === "string") {
-      return <p>{content}</p>;
-    } else {
-      return (
-        <ul className="list-disc list-inside">
-          {content.map((item) => (
-            <li key={item.index}>{item.description}</li>
-          ))}
-        </ul>
-      );
+    if (Array.isArray(content)) {
+      if (
+        content.every(
+          (item) => typeof item === "object" && "description" in item
+        )
+      ) {
+        return (
+          <ul className="list-disc list-inside">
+            {content.map((item: ContentItem, index) => (
+              <li key={index}>{item.description}</li>
+            ))}
+          </ul>
+        );
+      } else {
+        return <p>Invalid content format.</p>;
+      }
     }
   };
 

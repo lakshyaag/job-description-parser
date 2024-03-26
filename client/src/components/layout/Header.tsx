@@ -1,7 +1,7 @@
 import React from "react";
 import { metadata } from "@/app/layout";
 import Link from "next/link";
-import Github from "../GitHub";
+import Github from "../icons/GitHub";
 
 const Header = () => {
   return (

@@ -3,9 +3,14 @@
 import { JobDescription } from "@/lib/types";
 import { NextPage } from "next";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Accordion } from "@/components/ui/accordion";
-import JobDescriptionSection from "./JobDescriptionSection";
+import JobDescriptionSection from "@/components/JobDescriptionSections/JobDetailSection";
+import ContactSection from "@/components/JobDescriptionSections/ContactSection";
+import QualificationsSection from "./JobDescriptionSections/QualificationSection";
+import SkillsSection from "./JobDescriptionSections/SkillSection";
+import EducationSection from "./JobDescriptionSections/EducationSection";
+import CompanyInfoSection from "./JobDescriptionSections/CompanySection";
+import JobDetailsBadges from "./JobDescriptionSections/JobDetailBadges";
 
 interface ResultProps {
   jobDescription: JobDescription;
@@ -20,55 +25,70 @@ export const Result: NextPage<ResultProps> = ({ jobDescription }) => {
 
       <div className="flex flex-col gap-4">
         <div className="space-y-4">
-          <Card className="p-6 gap-4">
-            <h2 className="text-2xl font-bold">{jobDescription.title}</h2>
-            <div className="flex gap-2 mt-4">
-              {jobDescription.salary_range && (
-                <Badge>{jobDescription.salary_range}</Badge>
-              )}
-              {jobDescription.industry && (
-                <Badge variant={"outline"}>{jobDescription.industry}</Badge>
-              )}
-              {jobDescription.location && (
-                <Badge>{jobDescription.location}</Badge>
-              )}
-              {jobDescription.years_of_experience && (
-                <Badge variant={"secondary"}>
-                  {jobDescription.years_of_experience}
-                </Badge>
-              )}
+          <Card className="p-6 gap-6 bg-white shadow-md rounded-lg">
+            <div className="flex flex-col">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+                {jobDescription.title}
+              </h2>
+              <JobDetailsBadges
+                industry={jobDescription.industry}
+                location={jobDescription.location}
+                yearsOfExperienceRequired={
+                  jobDescription.years_of_experience_required
+                }
+                yearsOfExperiencePreferred={
+                  jobDescription.years_of_experience_preferred
+                }
+                jobType={jobDescription.job_type}
+                salaryRange={jobDescription.salary_range}
+              />
             </div>
           </Card>
 
           <Accordion type="single" collapsible>
-            <JobDescriptionSection
-              title="Company Information"
-              content={jobDescription.company_information}
+            <CompanyInfoSection
+              companyInformation={jobDescription.company_information}
+              culture={jobDescription.culture}
             />
-            <JobDescriptionSection
-              title="Education"
-              content={jobDescription.education}
-            />
+
             <JobDescriptionSection
               title="Responsibilities"
               content={jobDescription.responsibilities}
             />
-            <JobDescriptionSection
-              title="Qualifications"
-              content={jobDescription.qualifications}
+
+            <QualificationsSection
+              requiredQualifications={jobDescription.qualifications_required}
+              preferredQualifications={jobDescription.qualifications_preferred}
             />
+
+            {jobDescription.education &&
+              jobDescription.education.length > 0 && (
+                <EducationSection
+                  educationRequirements={jobDescription.education}
+                />
+              )}
+
+            <SkillsSection
+              requiredSkills={jobDescription.skills_required}
+              preferredSkills={jobDescription.skills_preferred}
+            />
+
             <JobDescriptionSection
               title="Experience"
               content={jobDescription.experience}
             />
+
             <JobDescriptionSection
               title="Benefits"
               content={jobDescription.benefits}
             />
-            <JobDescriptionSection
-              title="Skills"
-              content={jobDescription.skills}
-            />
+
+            {jobDescription.contact_information && (
+              <ContactSection
+                contactInfo={jobDescription.contact_information}
+              />
+            )}
+
             <JobDescriptionSection
               title="Additional Requirements"
               content={jobDescription.additional_requirements}
