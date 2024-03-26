@@ -9,6 +9,7 @@ from fastapi.exceptions import ResponseValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from models import JobDescription, RequestPayload
 from openai import AsyncOpenAI
+from prompts import messages
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("API Client")
@@ -53,22 +54,15 @@ async def call(
 
 
 @app.post("/jd/", response_model=JobDescription)
-async def process_job_description(request: RequestPayload) -> JobDescription:
+async def process_job_description(
+    request: RequestPayload, model: str = "gpt-4-turbo-preview"
+) -> JobDescription:
     try:
-        messages = [
-            {
-                "role": "system",
-                "content": """Extract information from the job description. 
-                If any information is missing or can not be found, do not attempt to generate it. 
-                Simply provide the information that is available. DO NOT make up any information.
-                """,
-            },
+        messages.append(
             {"role": "user", "content": request.job_description},
-        ]
-
-        response = await call(
-            llm_client, JobDescription, messages, model="gpt-3.5-turbo"
         )
+
+        response = await call(llm_client, JobDescription, messages, model=model)
 
         return response
 
