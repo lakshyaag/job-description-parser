@@ -6,7 +6,7 @@ import { NextPage } from "next";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { LoadingSpinner } from "./LoadingSpinner";
+import { LoadingSpinner } from "./icons/LoadingSpinner";
 import { result_data } from "@/lib/utils";
 
 import { createClient } from "@/lib/supabase/client";
@@ -45,7 +45,7 @@ const Form: NextPage<FormProps> = ({
     const data = await analyze(payload);
 
     setResultData(data);
-    // setResultData(result_data)
+    // setResultData(result_data);
 
     try {
       await insertJobDescription(jobDescription, data);
