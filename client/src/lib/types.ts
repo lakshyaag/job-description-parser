@@ -1,7 +1,3 @@
-export interface RequestPayload {
-  job_description: string | undefined;
-}
-
 export enum JobType {
   FULL_TIME = "full-time",
   PART_TIME = "part-time",

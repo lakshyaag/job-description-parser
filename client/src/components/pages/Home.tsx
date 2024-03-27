@@ -3,7 +3,7 @@
 import { NextPage } from "next";
 import { useState } from "react";
 import { JobDescription } from "@/lib/types";
-import Form from "../Form";
+import InputForm from "../InputForm";
 import Result from "../Result";
 import Loading from "../Loading";
 
@@ -29,7 +29,7 @@ const Home: NextPage = () => {
 
       <section className="h-4/5 w-full py-4">
         <div className="container mx-auto flex flex-col md:flex-row h-full justify-between items-start px-4 md:px-6 gap-8">
-          <Form
+          <InputForm
             setResultData={setResultData}
             setIsLoading={setIsLoading}
             isLoading={isLoading}

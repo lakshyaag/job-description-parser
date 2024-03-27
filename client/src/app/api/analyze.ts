@@ -1,4 +1,5 @@
-import { JobDescription, RequestPayload } from "@/lib/types";
+import { RequestPayload } from "@/components/InputForm";
+import { JobDescription } from "@/lib/types";
 import { API_URL } from "@/lib/utils";
 
 export const analyze = async (
