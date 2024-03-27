@@ -30,14 +30,16 @@ const CompanyInfoSection: React.FC<CompanyInfoSectionProps> = ({
               <p>{companyInformation}</p>
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="company_culture">
-            <AccordionTrigger className="font-bold text-sm text-gray-800 dark:text-gray-200">
-              Culture
-            </AccordionTrigger>
-            <AccordionContent>
-              <p>{culture}</p>
-            </AccordionContent>
-          </AccordionItem>
+          {culture && (
+            <AccordionItem value="company_culture">
+              <AccordionTrigger className="font-bold text-sm text-gray-800 dark:text-gray-200">
+                Culture
+              </AccordionTrigger>
+              <AccordionContent>
+                <p>{culture}</p>
+              </AccordionContent>
+            </AccordionItem>
+          )}
         </Accordion>
       </AccordionContent>
     </AccordionItem>

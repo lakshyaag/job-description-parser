@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
-    <main className="flex w-full flex-col min-h-screen">
+    <main className="flex w-full flex-col min-h-screen dark:bg-black bg-white dark:bg-dot-white/[0.1] bg-dot-black/[0.1]">
       <section className="h-1/5 w-full py-4">
         <div className="container mx-auto flex h-full items-center justify-center px-8 md:px-12 text-center gap-4">
           <div>
