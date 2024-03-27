@@ -160,3 +160,4 @@ class JobDescription(BaseModel):
 
 class RequestPayload(BaseModel):
     job_description: str
+    model: str

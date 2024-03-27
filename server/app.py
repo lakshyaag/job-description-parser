@@ -56,15 +56,13 @@ async def call(
 
 @app.post("/jd/", response_model=JobDescription)
 @retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
-async def process_job_description(
-    request: RequestPayload, model: str = "gpt-4-turbo-preview"
-) -> JobDescription:
+async def process_job_description(request: RequestPayload) -> JobDescription:
     try:
         messages.append(
             {"role": "user", "content": request.job_description},
         )
 
-        response = await call(llm_client, JobDescription, messages, model=model)
+        response = await call(llm_client, JobDescription, messages, model=request.model)
 
         return response
 
