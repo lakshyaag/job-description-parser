@@ -3,13 +3,11 @@
 import { analyze } from "@/app/api/analyze";
 import { JobDescription } from "@/lib/types";
 import { NextPage } from "next";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { LoadingSpinner } from "./icons/LoadingSpinner";
 import { result_data } from "@/lib/utils";
 
-import { createClient } from "@/lib/supabase/client";
 import { useToast } from "./ui/use-toast";
 import { insertJobDescription } from "@/app/api/supabaseService";
 import { z } from "zod";
@@ -73,19 +71,28 @@ const InputForm: NextPage<FormProps> = ({
       model: values.model,
     };
 
-    const data = await analyze(payload);
-
-    setResultData(data);
-    // setResultData(result_data);
-
     try {
-      await insertJobDescription(values.job_description, values.model, data);
-      console.log("Successfully saved query response to database.");
+      const data = await analyze(payload);
+      setResultData(data);
+      // setResultData(result_data);
+
+      try {
+        await insertJobDescription(values.job_description, values.model, data);
+        console.log("Successfully saved query response to database.");
+      } catch (error) {
+        console.error("Failed to save query response to database:", error);
+        toast({
+          title: "Error",
+          description: "Failed to save your query. Please try again.",
+          variant: "destructive",
+        });
+      }
     } catch (error) {
-      console.error("Failed to save query response to database:", error);
+      console.error("Failed to analyze job description:", error);
       toast({
         title: "Error",
-        description: "Failed to save your query. Please try again.",
+        description:
+          "Failed to analyze your job description. Please try again.",
         variant: "destructive",
       });
     }
