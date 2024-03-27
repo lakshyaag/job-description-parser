@@ -20,17 +20,17 @@ const SkillsSection: React.FC<SkillsProps> = ({
   const skillTypeColor = (type: string) => {
     switch (type) {
       case "Technical":
-        return "bg-blue-500";
+        return "bg-blue-500 dark:bg-blue-700";
       case "Soft":
-        return "bg-green-500";
+        return "bg-green-500 dark:bg-green-700";
       case "Language":
-        return "bg-red-500";
+        return "bg-red-500 dark:bg-red-700";
       case "Certification":
-        return "bg-yellow-500";
+        return "bg-yellow-500 dark:bg-yellow-700";
       case "Other":
-        return "bg-purple-500";
+        return "bg-purple-500 dark:bg-purple-700";
       default:
-        return "bg-gray-500";
+        return "bg-gray-500 dark:bg-gray-700";
     }
   };
 

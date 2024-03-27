@@ -25,7 +25,7 @@ export const Result: NextPage<ResultProps> = ({ jobDescription }) => {
 
       <div className="flex flex-col gap-4">
         <div className="space-y-4">
-          <Card className="p-6 gap-6 bg-white shadow-md rounded-lg">
+          <Card className="p-6 gap-6 bg-white dark:bg-zinc-900 shadow-md rounded-lg">
             <div className="flex flex-col">
               <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
                 {jobDescription.title}

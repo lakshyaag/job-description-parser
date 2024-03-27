@@ -6,6 +6,7 @@ import { fontSans } from "@/lib/styles/fonts";
 import { cn } from "@/lib/utils";
 
 import "@/lib/styles/globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const APP_NAME = "Job Description Parser";
 const APP_DESCRIPTION = "Simplify your job search in seconds.";
@@ -55,10 +56,17 @@ const RootLayout = ({ children }: RootLayoutProps) => {
           fontSans.variable
         )}
       >
-        <Layout>
-          <div className="flex-2">{children}</div>
-        </Layout>
-        <Analytics />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Layout>
+            <div className="flex-2">{children}</div>
+          </Layout>
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );
