@@ -18,10 +18,10 @@ export enum SkillType {
 
 export interface Skill {
   index: number;
-  type: SkillType;
-  description?: string;
+  skill_type: SkillType;
+  name: string;
+  proficiency_level?: string;
 }
-
 export interface Responsibility {
   index: number;
   description: string;
@@ -59,6 +59,12 @@ export interface ContactInformation {
   other?: string;
 }
 
+export interface SalaryRange {
+  minimum?: number;
+  maximum?: number;
+  currency?: string;
+}
+
 export interface JobDescription {
   title: string;
   company_information: string;
@@ -68,15 +74,14 @@ export interface JobDescription {
   years_of_experience_required?: number;
   years_of_experience_preferred?: number;
   education: EducationRequirement[];
-  salary_range?: string;
+  salary_range?: SalaryRange;
   responsibilities: Responsibility[];
   qualifications_required: Qualification[];
   qualifications_preferred: Qualification[];
   experience: ExperienceRequirement[];
   benefits: Benefit[];
   culture?: string;
-  skills_required: Skill[];
-  skills_preferred: Skill[];
+  skills: Skill[];
   additional_requirements: AdditionalRequirement[];
   contact_information?: ContactInformation;
 }

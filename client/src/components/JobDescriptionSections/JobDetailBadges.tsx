@@ -1,9 +1,9 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { JobType } from "@/lib/types"; // Import if you're using TypeScript for type checking
+import { JobType, SalaryRange } from "@/lib/types"; // Import if you're using TypeScript for type checking
 
 interface JobDetailsBadgesProps {
-  salaryRange?: string;
+  salaryRange?: SalaryRange;
   industry?: string;
   location?: string;
   yearsOfExperienceRequired?: number;
@@ -19,16 +19,43 @@ const JobDetailsBadges: React.FC<JobDetailsBadgesProps> = ({
   yearsOfExperiencePreferred,
   jobType,
 }) => {
+  const showSalaryRange = (salaryRange: SalaryRange) => {
+    if (!salaryRange) return null;
+    if (salaryRange.minimum && salaryRange.maximum) {
+      return `${salaryRange.currency} ${salaryRange.minimum} - ${salaryRange.maximum}`;
+    } else if (salaryRange.minimum) {
+      return `From ${salaryRange.currency} ${salaryRange.minimum}`;
+    } else if (salaryRange.maximum) {
+      return `Up to ${salaryRange.currency} ${salaryRange.maximum}`;
+    } else {
+      return `Salary not specified`;
+    }
+  };
+
+  const showYearsOfExperience = (
+    yearsOfExperiencePreferred?: number,
+    yearsOfExperienceRequired?: number
+  ) => {
+    if (yearsOfExperiencePreferred) {
+      return `${yearsOfExperienceRequired}-${yearsOfExperiencePreferred} years`;
+    } else {
+      return `${yearsOfExperienceRequired}+ years`;
+    }
+  };
+
   return (
     <div className="flex gap-2 mt-4">
-      {salaryRange && <Badge variant="default">{salaryRange}</Badge>}
+      {salaryRange && (
+        <Badge variant="default">{showSalaryRange(salaryRange)}</Badge>
+      )}
       {industry && <Badge variant="outline">{industry}</Badge>}
       {location && <Badge variant="secondary">{location}</Badge>}
       {yearsOfExperienceRequired && (
         <Badge variant="secondary">
-          {yearsOfExperiencePreferred
-            ? `${yearsOfExperienceRequired}-${yearsOfExperiencePreferred} years`
-            : `${yearsOfExperienceRequired}+ years`}
+          {showYearsOfExperience(
+            yearsOfExperiencePreferred,
+            yearsOfExperienceRequired
+          )}
         </Badge>
       )}
       {jobType && <Badge variant="default">{jobType}</Badge>}

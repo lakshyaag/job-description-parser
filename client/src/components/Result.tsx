@@ -68,10 +68,7 @@ export const Result: NextPage<ResultProps> = ({ jobDescription }) => {
                 />
               )}
 
-            <SkillsSection
-              requiredSkills={jobDescription.skills_required}
-              preferredSkills={jobDescription.skills_preferred}
-            />
+            <SkillsSection skills={jobDescription.skills} />
 
             <JobDescriptionSection
               title="Experience"

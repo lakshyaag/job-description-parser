@@ -9,14 +9,10 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 interface SkillsProps {
-  requiredSkills: Skill[];
-  preferredSkills: Skill[];
+  skills: Skill[];
 }
 
-const SkillsSection: React.FC<SkillsProps> = ({
-  requiredSkills,
-  preferredSkills,
-}) => {
+const SkillsSection: React.FC<SkillsProps> = ({ skills }) => {
   const skillTypeColor = (type: string) => {
     switch (type) {
       case "Technical":
@@ -39,15 +35,15 @@ const SkillsSection: React.FC<SkillsProps> = ({
       {skills.map((skill, index) => (
         <Badge
           key={index}
-          className={`${skillTypeColor(skill.type)} text-white`}
+          className={`${skillTypeColor(skill.skill_type)} text-white`}
         >
-          {skill.description}
+          {skill.name}
         </Badge>
       ))}
     </div>
   );
 
-  if (requiredSkills.length === 0 && preferredSkills.length === 0) {
+  if (skills.length === 0) {
     return null;
   }
 
@@ -56,30 +52,7 @@ const SkillsSection: React.FC<SkillsProps> = ({
       <AccordionTrigger className="font-bold text-md text-gray-800 dark:text-gray-200">
         Skills
       </AccordionTrigger>
-      <AccordionContent>
-        <Accordion type="single" collapsible defaultValue="required_skills">
-          {requiredSkills.length > 0 && (
-            <AccordionItem value="required_skills">
-              <AccordionTrigger className="font-bold text-sm text-gray-800 dark:text-gray-200">
-                Required Skills
-              </AccordionTrigger>
-              <AccordionContent>
-                {renderSkillsList(requiredSkills)}
-              </AccordionContent>
-            </AccordionItem>
-          )}
-          {preferredSkills.length > 0 && (
-            <AccordionItem value="preferred_skills">
-              <AccordionTrigger className="font-bold text-sm text-gray-800 dark:text-gray-200">
-                Preferred Skills
-              </AccordionTrigger>
-              <AccordionContent>
-                {renderSkillsList(preferredSkills)}
-              </AccordionContent>
-            </AccordionItem>
-          )}
-        </Accordion>
-      </AccordionContent>
+      <AccordionContent>{renderSkillsList(skills)}</AccordionContent>
     </AccordionItem>
   );
 };
