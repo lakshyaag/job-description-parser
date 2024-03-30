@@ -1,11 +1,12 @@
 export enum JobType {
-  FULL_TIME = "full-time",
-  PART_TIME = "part-time",
-  CONTRACT = "contract",
-  TEMPORARY = "temporary",
-  INTERN = "intern",
-  VOLUNTEER = "volunteer",
-  REMOTE = "remote",
+  FULL_TIME = "Full-time",
+  PART_TIME = "Part-time",
+  CONTRACT = "Contract",
+  TEMPORARY = "Temporary",
+  INTERN = "Intern",
+  VOLUNTEER = "Volunteer",
+  REMOTE = "Remote",
+  HYBRID = "Hybrid",
 }
 
 export enum SkillType {
@@ -22,6 +23,7 @@ export interface Skill {
   name: string;
   proficiency_level?: string;
 }
+
 export interface Responsibility {
   index: number;
   description: string;
@@ -84,4 +86,14 @@ export interface JobDescription {
   skills: Skill[];
   additional_requirements: AdditionalRequirement[];
   contact_information?: ContactInformation;
+}
+
+export interface Keyword {
+  keyword: string;
+  source: string;
+  reasoning: string;
+}
+
+export interface Keywords {
+  keywords: Keyword[];
 }

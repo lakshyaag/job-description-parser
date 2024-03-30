@@ -51,14 +51,14 @@ const JobDetailsBadges: React.FC<JobDetailsBadgesProps> = ({
       {industry && <Badge variant="outline">{industry}</Badge>}
       {location && <Badge variant="secondary">{location}</Badge>}
       {yearsOfExperienceRequired && (
-        <Badge variant="secondary">
+        <Badge variant="default">
           {showYearsOfExperience(
             yearsOfExperiencePreferred,
             yearsOfExperienceRequired
           )}
         </Badge>
       )}
-      {jobType && <Badge variant="default">{jobType}</Badge>}
+      {jobType && <Badge variant="outline">{jobType}</Badge>}
     </div>
   );
 };

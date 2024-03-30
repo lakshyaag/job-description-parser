@@ -2,14 +2,17 @@
 
 import { NextPage } from "next";
 import { useState } from "react";
-import { JobDescription } from "@/lib/types";
+import { JobDescription, Keywords } from "@/lib/types";
 import InputForm from "../InputForm";
 import Breakdown from "../Breakdown";
 import Loading from "../Loading";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { KeywordView } from "../KeywordView";
 
 const Home: NextPage = () => {
   const [resultData, setResultData] = useState<JobDescription>();
+  const [keywordData, setKeywordData] = useState<Keywords>();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
@@ -46,18 +49,20 @@ const Home: NextPage = () => {
                   className="flex gap-4 justify-center w-full"
                 >
                   <TabsTrigger value="breakdown" className="flex-grow">
-                    Breakdown
+                    Overview
                   </TabsTrigger>
                   <TabsTrigger value="keywords" className="flex-grow">
                     Keywords
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="breakdown">
-                  <Breakdown jobDescription={resultData} />
+                  <Breakdown
+                    jobDescription={resultData}
+                    setKeywordData={setKeywordData}
+                  />
                 </TabsContent>
                 <TabsContent value="keywords">
-                  {/* Replace with your Keywords component */}
-                  <p>Keywords component goes here</p>
+                  <KeywordView keywords={keywordData} />
                 </TabsContent>
               </Tabs>
             </div>

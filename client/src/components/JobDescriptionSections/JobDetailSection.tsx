@@ -7,12 +7,12 @@ import {
 
 type ContentItem = { index: number; description: string };
 
-interface JobDescriptionSectionProps {
+interface JobDetailSectionProps {
   title: string;
   content: ContentItem[];
 }
 
-const JobDescriptionSection: React.FC<JobDescriptionSectionProps> = ({
+const JobDetailSection: React.FC<JobDetailSectionProps> = ({
   title,
   content,
 }) => {
@@ -48,4 +48,4 @@ const JobDescriptionSection: React.FC<JobDescriptionSectionProps> = ({
   );
 };
 
-export default JobDescriptionSection;
+export default JobDetailSection;
