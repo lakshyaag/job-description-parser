@@ -25,6 +25,7 @@ export const KeywordView: NextPage<KeywordViewProps> = ({ keywords }) => {
           <TableRow>
             <TableHead>Keyword</TableHead>
             <TableHead>Reasoning</TableHead>
+            <TableHead>Source</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -37,6 +38,7 @@ export const KeywordView: NextPage<KeywordViewProps> = ({ keywords }) => {
                 {keyword.keyword}
               </TableCell>
               <TableCell>{keyword.reasoning}</TableCell>
+              <TableCell>{keyword.source}</TableCell>
             </TableRow>
           ))}
         </TableBody>
