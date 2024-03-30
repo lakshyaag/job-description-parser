@@ -5,12 +5,10 @@ import instructor
 import uvicorn
 from dotenv import find_dotenv, load_dotenv
 from fastapi import FastAPI, HTTPException
-from fastapi.exceptions import ResponseValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from models import JobDescription, RequestPayload
+from models import JobDescription, RequestPayload, Keywords
 from openai import AsyncOpenAI
-from prompts import messages
-from tenacity import retry, stop_after_attempt, wait_fixed
+from prompts import EXTRACTOR_MESSAGES, KEYWORD_MESSAGES
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("API Client")
@@ -45,6 +43,7 @@ async def call(
             response_model=response_model,
             messages=messages,
             temperature=0.0,
+            max_retries=2,
         )
 
         return response
@@ -55,20 +54,23 @@ async def call(
 
 
 @app.post("/jd/", response_model=JobDescription)
-@retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
 async def process_job_description(request: RequestPayload) -> JobDescription:
-    try:
-        messages.append(
-            {"role": "user", "content": request.job_description},
-        )
+    logger.info("Extracting job description fields...")
+    messages = EXTRACTOR_MESSAGES + [{"role": "user", "content": request.context}]
 
-        response = await call(llm_client, JobDescription, messages, model=request.model)
+    response = await call(llm_client, JobDescription, messages, model=request.model)
 
-        return response
+    return response
 
-    except ResponseValidationError as e:
-        logger.error(f"Error: {e}")
-        raise HTTPException(status_code=400, detail=f"Bad Request. {str(e)}")
+
+@app.post("/keywords/", response_model=Keywords)
+async def extract_keywords(request: RequestPayload) -> Keywords:
+    logger.info("Extracting keywords from job description...")
+    messages = KEYWORD_MESSAGES + [{"role": "user", "content": request.context}]
+
+    response = await call(llm_client, Keywords, messages, model=request.model)
+
+    return response
 
 
 @app.get("/")

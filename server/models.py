@@ -191,6 +191,11 @@ class JobDescription(BaseModel):
         [], description="List of job responsibilities."
     )
 
+    skills: List[Skill] = Field(
+        [],
+        description="List of skills required for the job position.",
+    )
+
     qualifications_required: List[Qualification] = Field(
         [], description="List of required qualifications."
     )
@@ -211,11 +216,6 @@ class JobDescription(BaseModel):
         example="Innovative, collaborative, and employee-focused.",
     )
 
-    skills: List[Skill] = Field(
-        [],
-        description="List of skills required for the job position.",
-    )
-
     additional_requirements: List[AdditionalRequirement] = Field(
         [], description="Any additional requirements for the job."
     )
@@ -225,5 +225,20 @@ class JobDescription(BaseModel):
 
 
 class RequestPayload(BaseModel):
-    job_description: str
+    context: str
     model: str
+
+
+class Keyword(BaseModel):
+    keyword: str = Field(..., title="Keyword", description="Keyword")
+    source: str = Field(..., title="Source", description="Source of the keyword")
+    reasoning: str = Field(
+        title="Reasoning",
+        description="Reasonings for including the keyword in the resume",
+    )
+
+
+class Keywords(BaseModel):
+    keywords: list[Keyword] = Field(
+        ..., title="Keywords", description="List of keywords to include in resume"
+    )
