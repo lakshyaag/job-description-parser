@@ -185,7 +185,7 @@ class JobDescription(BaseModel):
         [], description="List of educational requirements."
     )
 
-    salary_range: SalaryRange = Field(None, description="The salary range")
+    salary_range: Optional[SalaryRange] = Field(None, description="The salary range")
 
     responsibilities: List[Responsibility] = Field(
         [], description="List of job responsibilities."
