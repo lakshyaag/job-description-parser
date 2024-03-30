@@ -12,13 +12,13 @@ import EducationSection from "./JobDescriptionSections/EducationSection";
 import CompanyInfoSection from "./JobDescriptionSections/CompanySection";
 import JobDetailsBadges from "./JobDescriptionSections/JobDetailBadges";
 
-interface ResultProps {
+interface BreakdownProps {
   jobDescription: JobDescription;
 }
 
-export const Result: NextPage<ResultProps> = ({ jobDescription }) => {
+export const Breakdown: NextPage<BreakdownProps> = ({ jobDescription }) => {
   return (
-    <div className="flex flex-col gap-4 w-full md:w-1/2 ">
+    <div className="flex flex-col gap-4">
       <p className="text-md font-bold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl lg:text-2xl">
         Detailed Breakdown
       </p>
@@ -97,4 +97,4 @@ export const Result: NextPage<ResultProps> = ({ jobDescription }) => {
   );
 };
 
-export default Result;
+export default Breakdown;

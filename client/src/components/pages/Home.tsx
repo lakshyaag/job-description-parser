@@ -4,8 +4,9 @@ import { NextPage } from "next";
 import { useState } from "react";
 import { JobDescription } from "@/lib/types";
 import InputForm from "../InputForm";
-import Result from "../Result";
+import Breakdown from "../Breakdown";
 import Loading from "../Loading";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
 const Home: NextPage = () => {
   const [resultData, setResultData] = useState<JobDescription>();
@@ -38,7 +39,28 @@ const Home: NextPage = () => {
           {isLoading ? (
             <Loading />
           ) : resultData ? (
-            <Result jobDescription={resultData} />
+            <div className="flex flex-col gap-4 w-full md:w-1/2 ">
+              <Tabs defaultValue="breakdown">
+                <TabsList
+                  aria-label="Results Tabs"
+                  className="flex gap-4 justify-center w-full"
+                >
+                  <TabsTrigger value="breakdown" className="flex-grow">
+                    Breakdown
+                  </TabsTrigger>
+                  <TabsTrigger value="keywords" className="flex-grow">
+                    Keywords
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="breakdown">
+                  <Breakdown jobDescription={resultData} />
+                </TabsContent>
+                <TabsContent value="keywords">
+                  {/* Replace with your Keywords component */}
+                  <p>Keywords component goes here</p>
+                </TabsContent>
+              </Tabs>
+            </div>
           ) : (
             <></>
           )}
