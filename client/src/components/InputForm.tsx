@@ -37,7 +37,7 @@ interface FormProps {
 }
 
 const FormSchema = z.object({
-  job_description: z.string(),
+  context: z.string(),
   model: z.enum(["gpt-3.5-turbo", "gpt-4-turbo-preview"]),
 });
 
@@ -53,7 +53,7 @@ const InputForm: NextPage<FormProps> = ({
   const inputForm = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      job_description: "",
+      context: "",
       model: "gpt-3.5-turbo",
     },
   });
@@ -67,18 +67,13 @@ const InputForm: NextPage<FormProps> = ({
       variant: "default",
     });
 
-    const payload = {
-      job_description: values.job_description,
-      model: values.model,
-    };
-
     try {
-      const data = await analyze(payload);
+      const data = await analyze({ ...values });
       setResultData(data);
       // setResultData(result_data);
 
       try {
-        await insertJobDescription(values.job_description, values.model, data);
+        await insertJobDescription(values.context, values.model, data);
         console.log("Successfully saved query response to database.");
       } catch (error) {
         console.error("Failed to save query response to database:", error);
@@ -110,7 +105,7 @@ const InputForm: NextPage<FormProps> = ({
         <form onSubmit={inputForm.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={inputForm.control}
-            name="job_description"
+            name="context"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Job Description</FormLabel>

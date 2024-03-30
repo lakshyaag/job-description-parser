@@ -19,4 +19,8 @@ KEYWORD_MESSAGES = [
         "role": "system",
         "content": "Extract relevant keywords from the job responsibilities to include in resume for ATS in recruiting process.",
     },
+    {
+        "role": "user",
+        "content": """You are helping a job applicant in identifying the keywords from the job description to include in their resume for the Applicant Tracking System (ATS) used by recruiters.""",
+    },
 ]

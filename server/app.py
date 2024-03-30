@@ -56,9 +56,7 @@ async def call(
 @app.post("/jd/", response_model=JobDescription)
 async def process_job_description(request: RequestPayload) -> JobDescription:
     logger.info("Extracting job description fields...")
-    messages = EXTRACTOR_MESSAGES + [
-        {"role": "user", "content": request.job_description}
-    ]
+    messages = EXTRACTOR_MESSAGES + [{"role": "user", "content": request.context}]
 
     response = await call(llm_client, JobDescription, messages, model=request.model)
 
@@ -68,7 +66,7 @@ async def process_job_description(request: RequestPayload) -> JobDescription:
 @app.post("/keywords/", response_model=Keywords)
 async def extract_keywords(request: RequestPayload) -> Keywords:
     logger.info("Extracting keywords from job description...")
-    messages = KEYWORD_MESSAGES + [{"role": "user", "content": request.job_description}]
+    messages = KEYWORD_MESSAGES + [{"role": "user", "content": request.context}]
 
     response = await call(llm_client, Keywords, messages, model=request.model)
 

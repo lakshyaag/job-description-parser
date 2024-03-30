@@ -48,7 +48,11 @@ export const BreakdownView: NextPage<BreakdownViewProps> = ({
     });
 
     const payload = {
-      job_description: JSON.stringify(jobDescription.responsibilities),
+      context: JSON.stringify({
+        responsibilities: jobDescription.responsibilities,
+        qualifications_required: jobDescription.qualifications_required,
+        skills: jobDescription.skills,
+      }),
       model: "gpt-4-turbo-preview" as const,
     };
 

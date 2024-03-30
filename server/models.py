@@ -225,7 +225,7 @@ class JobDescription(BaseModel):
 
 
 class RequestPayload(BaseModel):
-    job_description: str
+    context: str
     model: str
 
 
