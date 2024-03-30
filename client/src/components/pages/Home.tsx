@@ -3,15 +3,17 @@
 import { NextPage } from "next";
 import { useState } from "react";
 import { JobDescription, Keywords } from "@/lib/types";
-import InputForm from "../InputForm";
-import Breakdown from "../Breakdown";
-import Loading from "../Loading";
+import InputForm from "@/components/InputForm";
+import BreakdownView from "@/components/ResultSections/BreakdownView";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { KeywordView } from "../KeywordView";
+import { KeywordView } from "@/components/ResultSections/KeywordView";
+import Loading from "../Loading";
 
 const Home: NextPage = () => {
   const [resultData, setResultData] = useState<JobDescription>();
   const [keywordData, setKeywordData] = useState<Keywords>();
+
+  const [activeTab, setActiveTab] = useState<string>("breakdown");
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -43,22 +45,31 @@ const Home: NextPage = () => {
             <Loading />
           ) : resultData ? (
             <div className="flex flex-col gap-4 w-full md:w-1/2 ">
-              <Tabs defaultValue="breakdown">
+              <Tabs value={activeTab}>
                 <TabsList
                   aria-label="Results Tabs"
                   className="flex gap-4 justify-center w-full"
                 >
-                  <TabsTrigger value="breakdown" className="flex-grow">
+                  <TabsTrigger
+                    value="breakdown"
+                    className="flex-grow"
+                    onClick={() => setActiveTab("breakdown")}
+                  >
                     Overview
                   </TabsTrigger>
-                  <TabsTrigger value="keywords" className="flex-grow">
+                  <TabsTrigger
+                    value="keywords"
+                    className="flex-grow"
+                    onClick={() => setActiveTab("keywords")}
+                  >
                     Keywords
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="breakdown">
-                  <Breakdown
+                  <BreakdownView
                     jobDescription={resultData}
                     setKeywordData={setKeywordData}
+                    setActiveTab={setActiveTab}
                   />
                 </TabsContent>
                 <TabsContent value="keywords">

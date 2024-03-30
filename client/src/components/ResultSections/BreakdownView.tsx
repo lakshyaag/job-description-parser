@@ -13,25 +13,27 @@ import {
 import { Accordion } from "@/components/ui/accordion";
 import JobDetailSection from "@/components/JobDescriptionSections/JobDetailSection";
 import ContactSection from "@/components/JobDescriptionSections/ContactSection";
-import QualificationsSection from "./JobDescriptionSections/QualificationSection";
-import SkillsSection from "./JobDescriptionSections/SkillSection";
-import EducationSection from "./JobDescriptionSections/EducationSection";
-import CompanyInfoSection from "./JobDescriptionSections/CompanySection";
-import JobDetailsBadges from "./JobDescriptionSections/JobDetailBadges";
-import { Button } from "./ui/button";
+import QualificationsSection from "../JobDescriptionSections/QualificationSection";
+import SkillsSection from "../JobDescriptionSections/SkillSection";
+import EducationSection from "../JobDescriptionSections/EducationSection";
+import CompanyInfoSection from "../JobDescriptionSections/CompanySection";
+import JobDetailsBadges from "../JobDescriptionSections/JobDetailBadges";
+import { Button } from "../ui/button";
 import { Dispatch, SetStateAction, useState } from "react";
-import { toast } from "./ui/use-toast";
-import { LoadingSpinner } from "./icons/LoadingSpinner";
+import { toast } from "../ui/use-toast";
+import { LoadingSpinner } from "../icons/LoadingSpinner";
 import { keywords } from "@/app/api/keywords";
 
-interface BreakdownProps {
+interface BreakdownViewProps {
   jobDescription: JobDescription;
   setKeywordData: Dispatch<SetStateAction<Keywords | undefined>>;
+  setActiveTab: Dispatch<SetStateAction<string>>;
 }
 
-export const Breakdown: NextPage<BreakdownProps> = ({
+export const BreakdownView: NextPage<BreakdownViewProps> = ({
   jobDescription,
   setKeywordData,
+  setActiveTab,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -53,6 +55,7 @@ export const Breakdown: NextPage<BreakdownProps> = ({
     try {
       const data = await keywords(payload);
       setKeywordData(data);
+      setActiveTab("keywords");
     } catch (error) {
       console.error("Error:", error);
       toast({
@@ -102,11 +105,12 @@ export const Breakdown: NextPage<BreakdownProps> = ({
                   disabled={isLoading}
                 >
                   {isLoading ? (
-                    <>
-                      Generating keywords <LoadingSpinner />
-                    </>
+                    <div className="flex items-center justify-center space-x-2">
+                      <span>Generating keywords</span>
+                      <LoadingSpinner />
+                    </div>
                   ) : (
-                    "Generate keywords"
+                    <div>Generate keywords</div>
                   )}
                 </Button>
               </CardFooter>
@@ -165,4 +169,4 @@ export const Breakdown: NextPage<BreakdownProps> = ({
   );
 };
 
-export default Breakdown;
+export default BreakdownView;
