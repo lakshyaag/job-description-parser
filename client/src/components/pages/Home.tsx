@@ -8,6 +8,7 @@ import BreakdownView from "@/components/ResultSections/BreakdownView";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { KeywordView } from "@/components/ResultSections/KeywordView";
 import Loading from "../Loading";
+import { ResumeView } from "../ResultSections/ResumeView";
 
 const Home: NextPage = () => {
   const [resultData, setResultData] = useState<JobDescription>();
@@ -68,6 +69,13 @@ const Home: NextPage = () => {
                   >
                     Keywords
                   </TabsTrigger>
+                  <TabsTrigger
+                    value="resume"
+                    className="flex-grow"
+                    onClick={() => setActiveTab("resume")}
+                  >
+                    Resume
+                  </TabsTrigger>
                 </TabsList>
                 <TabsContent value="breakdown">
                   <BreakdownView
@@ -79,6 +87,9 @@ const Home: NextPage = () => {
                 </TabsContent>
                 <TabsContent value="keywords">
                   <KeywordView keywords={keywordData} />
+                </TabsContent>
+                <TabsContent value="resume">
+                  <ResumeView keywords={keywordData} />
                 </TabsContent>
               </Tabs>
             </div>

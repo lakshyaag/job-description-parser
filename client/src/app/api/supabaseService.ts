@@ -34,3 +34,15 @@ export async function insertKeywords(
 
   return data;
 }
+
+export async function uploadResume(resume: File) {
+  const { data, error } = await supabase.storage
+    .from("resume")
+    .upload(`${resume.name}`, resume);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
