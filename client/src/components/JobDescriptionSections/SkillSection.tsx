@@ -7,6 +7,12 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type SkillsProps = Pick<JobDescription, "skills">;
 
@@ -31,14 +37,26 @@ const SkillsSection: React.FC<SkillsProps> = ({ skills }) => {
   const renderSkillsList = (skills: Skill[]) => (
     <div className="flex flex-wrap gap-2">
       {skills.map((skill, index) => (
-        <Badge
-          key={index}
-          className="text-white dark:text-gray-800 bg-blue-500 dark:bg-blue-700"
-        >
-          {skill.name}
+        <TooltipProvider key={index}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Badge
+                key={index}
+                className="text-white dark:text-gray-800 bg-blue-500 dark:bg-blue-700"
+              >
+                {skill.name}
 
-          {/* TODO: Add tooltip to show skill type & proficiency level */}
-        </Badge>
+                {/* TODO: Add tooltip to show skill type & proficiency level */}
+              </Badge>
+            </TooltipTrigger>
+            <TooltipContent side="top" align="center">
+              <div className="p-2 bg-gray-800 text-white rounded-lg">
+                <p>Type: {skill.skill_type}</p>
+                <p>Proficiency: {skill.proficiency_level}</p>
+              </div>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       ))}
     </div>
   );
