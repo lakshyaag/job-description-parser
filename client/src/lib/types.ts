@@ -1,3 +1,30 @@
+export interface AdditionalRequirement {
+  index: number;
+  description: string;
+}
+
+export interface Benefit {
+  index: number;
+  description: string;
+}
+
+export interface ContactInformation {
+  email?: string | null;
+  telephone?: string | null;
+  website?: string | null;
+  other?: string | null;
+}
+
+export interface EducationRequirement {
+  level: string;
+  field_of_study?: string | null;
+}
+
+export interface ExperienceRequirement {
+  index: number;
+  description: string;
+}
+
 export enum JobType {
   FULL_TIME = "Full-time",
   PART_TIME = "Part-time",
@@ -7,6 +34,22 @@ export enum JobType {
   VOLUNTEER = "Volunteer",
   REMOTE = "Remote",
   HYBRID = "Hybrid",
+}
+
+export interface Qualification {
+  index: number;
+  description: string;
+}
+
+export interface Responsibility {
+  index: number;
+  description: string;
+}
+
+export interface SalaryRange {
+  minimum?: number | null;
+  maximum?: number | null;
+  currency?: string | null;
 }
 
 export enum SkillType {
@@ -19,73 +62,30 @@ export enum SkillType {
 
 export interface Skill {
   index: number;
-  skill_type: SkillType;
+  skill_type: string;
   name: string;
-  proficiency_level?: string;
-}
-
-export interface Responsibility {
-  index: number;
-  description: string;
-}
-
-export interface Qualification {
-  index: number;
-  description: string;
-}
-
-export interface ExperienceRequirement {
-  index: number;
-  description: string;
-}
-
-export interface Benefit {
-  index: number;
-  description: string;
-}
-
-export interface AdditionalRequirement {
-  index: number;
-  description: string;
-}
-
-export interface EducationRequirement {
-  level: string;
-  field_of_study?: string;
-}
-
-export interface ContactInformation {
-  email?: string;
-  telephone?: string;
-  website?: string;
-  other?: string;
-}
-
-export interface SalaryRange {
-  minimum?: number;
-  maximum?: number;
-  currency?: string;
+  proficiency_level?: string | null;
 }
 
 export interface JobDescription {
   title: string;
   company_information: string;
-  industry?: string;
-  location?: string;
+  industry?: string | null;
+  location?: string | null;
   job_type: JobType;
-  years_of_experience_required?: number;
-  years_of_experience_preferred?: number;
+  years_of_experience_required?: number | null;
+  years_of_experience_preferred?: number | null;
   education: EducationRequirement[];
-  salary_range?: SalaryRange;
+  salary_range?: SalaryRange | null;
   responsibilities: Responsibility[];
+  skills: Skill[];
   qualifications_required: Qualification[];
   qualifications_preferred: Qualification[];
   experience: ExperienceRequirement[];
   benefits: Benefit[];
-  culture?: string;
-  skills: Skill[];
+  culture?: string | null;
   additional_requirements: AdditionalRequirement[];
-  contact_information?: ContactInformation;
+  contact_information?: ContactInformation | null;
 }
 
 export interface Keyword {

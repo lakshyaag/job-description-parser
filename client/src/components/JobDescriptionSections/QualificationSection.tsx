@@ -5,16 +5,16 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
-import { Qualification } from "@/lib/types";
+import { JobDescription, Qualification } from "@/lib/types";
 
-interface QualificationsProps {
-  requiredQualifications: Qualification[];
-  preferredQualifications: Qualification[];
-}
+type QualificationsProps = Pick<
+  JobDescription,
+  "qualifications_required" | "qualifications_preferred"
+>;
 
 const QualificationsSection: React.FC<QualificationsProps> = ({
-  requiredQualifications,
-  preferredQualifications,
+  qualifications_required,
+  qualifications_preferred,
 }) => {
   const renderQualificationsList = (qualifications: Qualification[]) => (
     <ul className="list-disc list-inside">
@@ -23,6 +23,13 @@ const QualificationsSection: React.FC<QualificationsProps> = ({
       ))}
     </ul>
   );
+
+  if (
+    qualifications_required.length === 0 &&
+    qualifications_preferred.length === 0
+  ) {
+    return null;
+  }
 
   return (
     <AccordionItem value="qualifications">
@@ -35,23 +42,23 @@ const QualificationsSection: React.FC<QualificationsProps> = ({
           collapsible
           defaultValue="required_qualifications"
         >
-          {requiredQualifications.length > 0 && (
+          {qualifications_required.length > 0 && (
             <AccordionItem value="required_qualifications">
               <AccordionTrigger className="font-bold text-sm text-gray-800 dark:text-gray-200">
                 Required Qualifications
               </AccordionTrigger>
               <AccordionContent>
-                {renderQualificationsList(requiredQualifications)}
+                {renderQualificationsList(qualifications_required)}
               </AccordionContent>
             </AccordionItem>
           )}
-          {preferredQualifications.length > 0 && (
+          {qualifications_preferred.length > 0 && (
             <AccordionItem value="preferred_qualifications">
               <AccordionTrigger className="font-bold text-sm text-gray-800 dark:text-gray-200">
                 Preferred Qualifications
               </AccordionTrigger>
               <AccordionContent>
-                {renderQualificationsList(preferredQualifications)}
+                {renderQualificationsList(qualifications_preferred)}
               </AccordionContent>
             </AccordionItem>
           )}

@@ -91,14 +91,14 @@ export const BreakdownView: NextPage<BreakdownViewProps> = ({
                 <JobDetailsBadges
                   industry={jobDescription.industry}
                   location={jobDescription.location}
-                  yearsOfExperienceRequired={
+                  years_of_experience_required={
                     jobDescription.years_of_experience_required
                   }
-                  yearsOfExperiencePreferred={
+                  years_of_experience_preferred={
                     jobDescription.years_of_experience_preferred
                   }
-                  jobType={jobDescription.job_type}
-                  salaryRange={jobDescription.salary_range}
+                  job_type={jobDescription.job_type}
+                  salary_range={jobDescription.salary_range}
                 />
               </CardContent>
               <CardFooter>
@@ -123,7 +123,7 @@ export const BreakdownView: NextPage<BreakdownViewProps> = ({
 
           <Accordion type="single" collapsible>
             <CompanyInfoSection
-              companyInformation={jobDescription.company_information}
+              company_information={jobDescription.company_information}
               culture={jobDescription.culture}
             />
 
@@ -133,15 +133,13 @@ export const BreakdownView: NextPage<BreakdownViewProps> = ({
             />
 
             <QualificationsSection
-              requiredQualifications={jobDescription.qualifications_required}
-              preferredQualifications={jobDescription.qualifications_preferred}
+              qualifications_required={jobDescription.qualifications_required}
+              qualifications_preferred={jobDescription.qualifications_preferred}
             />
 
             {jobDescription.education &&
               jobDescription.education.length > 0 && (
-                <EducationSection
-                  educationRequirements={jobDescription.education}
-                />
+                <EducationSection education={jobDescription.education} />
               )}
 
             <SkillsSection skills={jobDescription.skills} />
@@ -158,7 +156,7 @@ export const BreakdownView: NextPage<BreakdownViewProps> = ({
 
             {jobDescription.contact_information && (
               <ContactSection
-                contactInfo={jobDescription.contact_information}
+                contact_information={jobDescription.contact_information}
               />
             )}
 

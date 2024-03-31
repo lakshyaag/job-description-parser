@@ -1,19 +1,15 @@
 import React from "react";
-import { EducationRequirement } from "@/lib/types";
+import { EducationRequirement, JobDescription } from "@/lib/types";
 import {
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
 
-interface EducationSectionProps {
-  educationRequirements: EducationRequirement[];
-}
+type EducationSectionProps = Pick<JobDescription, "education">;
 
-const EducationSection: React.FC<EducationSectionProps> = ({
-  educationRequirements,
-}) => {
-  if (educationRequirements.length === 0) return null;
+const EducationSection: React.FC<EducationSectionProps> = ({ education }) => {
+  if (education.length === 0) return null;
 
   return (
     <AccordionItem value="education_requirements">
@@ -22,7 +18,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({
       </AccordionTrigger>
       <AccordionContent>
         <ul className="list-disc list-inside">
-          {educationRequirements.map((requirement, index) => (
+          {education.map((requirement, index) => (
             <li key={index}>
               {requirement.level}
               {requirement.field_of_study

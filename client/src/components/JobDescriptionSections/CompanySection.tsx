@@ -6,13 +6,15 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 
-interface CompanyInfoSectionProps {
-  companyInformation: string;
-  culture: string | undefined;
-}
+import { JobDescription } from "@/lib/types";
+
+type CompanyInfoSectionProps = Pick<
+  JobDescription,
+  "company_information" | "culture"
+>;
 
 const CompanyInfoSection: React.FC<CompanyInfoSectionProps> = ({
-  companyInformation,
+  company_information,
   culture,
 }) => {
   return (
@@ -27,7 +29,7 @@ const CompanyInfoSection: React.FC<CompanyInfoSectionProps> = ({
               About
             </AccordionTrigger>
             <AccordionContent>
-              <p>{companyInformation}</p>
+              <p>{company_information}</p>
             </AccordionContent>
           </AccordionItem>
           {culture && (

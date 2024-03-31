@@ -9,6 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from models import JobDescription, RequestPayload, Keywords
 from openai import AsyncOpenAI
 from prompts import EXTRACTOR_MESSAGES, KEYWORD_MESSAGES
+from langsmith import traceable
+from langsmith.wrappers import wrap_openai
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("API Client")
@@ -16,8 +18,10 @@ logger = logging.getLogger("API Client")
 load_dotenv(find_dotenv())
 
 llm_client = instructor.patch(
-    AsyncOpenAI(
-        api_key=os.getenv("OPENAI_API_KEY"),
+    wrap_openai(
+        AsyncOpenAI(
+            api_key=os.getenv("OPENAI_API_KEY"),
+        )
     ),
 )
 
@@ -53,6 +57,7 @@ async def call(
         raise HTTPException(status_code=500, detail=f"Internal Server Error. {str(e)}")
 
 
+@traceable("extract")
 @app.post("/jd/", response_model=JobDescription)
 async def process_job_description(request: RequestPayload) -> JobDescription:
     logger.info("Extracting job description fields...")
@@ -63,6 +68,7 @@ async def process_job_description(request: RequestPayload) -> JobDescription:
     return response
 
 
+@traceable("keywords")
 @app.post("/keywords/", response_model=Keywords)
 async def extract_keywords(request: RequestPayload) -> Keywords:
     logger.info("Extracting keywords from job description...")
