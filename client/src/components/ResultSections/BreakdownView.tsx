@@ -24,6 +24,7 @@ import { toast } from "../ui/use-toast";
 import { LoadingSpinner } from "../icons/LoadingSpinner";
 import { keywords } from "@/app/api/keywords";
 import { RequestPayload } from "../InputForm";
+import { insertKeywords } from "@/app/api/supabaseService";
 
 interface BreakdownViewProps {
   jobDescription: JobDescription;
@@ -41,7 +42,6 @@ export const BreakdownView: NextPage<BreakdownViewProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getKeywords = async () => {
-    console.log("Generating keywords from ", jobDescription.responsibilities);
     setIsLoading(true);
 
     toast({
@@ -63,6 +63,18 @@ export const BreakdownView: NextPage<BreakdownViewProps> = ({
       const data = await keywords(payload);
       setKeywordData(data);
       setActiveTab("keywords");
+
+      try {
+        await insertKeywords(payload.context, payload.model, data);
+        console.log("Successfully saved keyword response to database.");
+      } catch (error) {
+        console.error("Failed to save keyword response to database:", error);
+        toast({
+          title: "Error",
+          description: "Failed to save keywords. Please try again.",
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       console.error("Error:", error);
       toast({

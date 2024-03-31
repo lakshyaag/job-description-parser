@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/client";
-import { JobDescription } from "@/lib/types";
+import { JobDescription, Keywords } from "@/lib/types";
 
 const supabase = createClient();
 
@@ -11,6 +11,22 @@ export async function insertJobDescription(
   const { data, error } = await supabase
     .from("queries")
     .insert({ query, model, response: response });
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function insertKeywords(
+  query: string,
+  model: string,
+  keywords: Keywords
+) {
+  const { data, error } = await supabase
+    .from("keywords")
+    .insert({ query, model, keywords });
 
   if (error) {
     throw error;
