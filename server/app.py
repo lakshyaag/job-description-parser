@@ -6,7 +6,7 @@ import uvicorn
 from dotenv import find_dotenv, load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from models_new import JobDescription, RequestPayload, Keywords
+from models import JobDescription, RequestPayload, Keywords
 from openai import AsyncOpenAI
 from prompts import EXTRACTOR_MESSAGES, KEYWORD_MESSAGES
 from langsmith import traceable
