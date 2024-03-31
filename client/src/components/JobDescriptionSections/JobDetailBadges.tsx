@@ -1,23 +1,24 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { JobType, SalaryRange } from "@/lib/types"; // Import if you're using TypeScript for type checking
+import { JobDescription, JobType, SalaryRange } from "@/lib/types"; // Import if you're using TypeScript for type checking
 
-interface JobDetailsBadgesProps {
-  salaryRange?: SalaryRange;
-  industry?: string;
-  location?: string;
-  yearsOfExperienceRequired?: number;
-  yearsOfExperiencePreferred?: number;
-  jobType?: JobType; // Use the appropriate type or remove if not using TypeScript
-}
+type JobDetailsBadgesProps = Pick<
+  JobDescription,
+  | "salary_range"
+  | "industry"
+  | "location"
+  | "years_of_experience_required"
+  | "years_of_experience_preferred"
+  | "job_type"
+>;
 
 const JobDetailsBadges: React.FC<JobDetailsBadgesProps> = ({
-  salaryRange,
+  salary_range,
   industry,
   location,
-  yearsOfExperienceRequired,
-  yearsOfExperiencePreferred,
-  jobType,
+  years_of_experience_required,
+  years_of_experience_preferred,
+  job_type,
 }) => {
   const showSalaryRange = (salaryRange: SalaryRange) => {
     if (!salaryRange) return null;
@@ -33,7 +34,7 @@ const JobDetailsBadges: React.FC<JobDetailsBadgesProps> = ({
   };
 
   const showYearsOfExperience = (
-    yearsOfExperiencePreferred?: number,
+    yearsOfExperiencePreferred?: number | null,
     yearsOfExperienceRequired?: number
   ) => {
     if (yearsOfExperiencePreferred) {
@@ -45,20 +46,20 @@ const JobDetailsBadges: React.FC<JobDetailsBadgesProps> = ({
 
   return (
     <div className="flex gap-2 mt-4">
-      {salaryRange && (
-        <Badge variant="default">{showSalaryRange(salaryRange)}</Badge>
+      {salary_range && (
+        <Badge variant="default">{showSalaryRange(salary_range)}</Badge>
       )}
       {industry && <Badge variant="outline">{industry}</Badge>}
       {location && <Badge variant="secondary">{location}</Badge>}
-      {yearsOfExperienceRequired && (
+      {years_of_experience_required && (
         <Badge variant="default">
           {showYearsOfExperience(
-            yearsOfExperiencePreferred,
-            yearsOfExperienceRequired
+            years_of_experience_preferred,
+            years_of_experience_required
           )}
         </Badge>
       )}
-      {jobType && <Badge variant="outline">{jobType}</Badge>}
+      {job_type && <Badge variant="outline">{job_type}</Badge>}
     </div>
   );
 };
