@@ -214,15 +214,24 @@ class RequestPayload(BaseModel):
 
 
 class Keyword(BaseModel):
-    keyword: str = Field(..., title="Keyword", description="Keyword")
-    source: str = Field(..., title="Source", description="Source of the keyword")
+    keyword: str = Field(..., title="Keyword", description="Keyword", example="Python")
+    source: str = Field(
+        ...,
+        title="Source",
+        description="Source of the keyword",
+        example="Responsibilities",
+    )
     reasoning: str = Field(
+        ...,
         title="Reasoning",
         description="Reasonings for including the keyword in the resume",
+        example="Mentioned as a required skill for the job",
     )
 
 
 class Keywords(BaseModel):
-    keywords: list[Keyword] = Field(
-        ..., title="Keywords", description="List of keywords to include in resume"
+    keywords: List[Keyword] = Field(
+        default_factory=list,
+        title="Keywords",
+        description="List of keywords to include in resume, allowing for null values in the list",
     )
