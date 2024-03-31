@@ -23,17 +23,20 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "../ui/use-toast";
 import { LoadingSpinner } from "../icons/LoadingSpinner";
 import { keywords } from "@/app/api/keywords";
+import { RequestPayload } from "../InputForm";
 
 interface BreakdownViewProps {
   jobDescription: JobDescription;
   setKeywordData: Dispatch<SetStateAction<Keywords | undefined>>;
   setActiveTab: Dispatch<SetStateAction<string>>;
+  model: Pick<RequestPayload, "model">;
 }
 
 export const BreakdownView: NextPage<BreakdownViewProps> = ({
   jobDescription,
   setKeywordData,
   setActiveTab,
+  model,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -50,10 +53,10 @@ export const BreakdownView: NextPage<BreakdownViewProps> = ({
     const payload = {
       context: JSON.stringify({
         responsibilities: jobDescription.responsibilities,
-        qualifications_required: jobDescription.qualifications_required,
+        required_qualifications: jobDescription.qualifications_required,
         skills: jobDescription.skills,
       }),
-      model: "gpt-4-turbo-preview" as const,
+      model: model.model,
     };
 
     try {
