@@ -3,7 +3,7 @@
 import { NextPage } from "next";
 import { useState } from "react";
 import { JobDescription, Keywords } from "@/lib/types";
-import InputForm from "@/components/InputForm";
+import InputForm, { RequestPayload } from "@/components/InputForm";
 import BreakdownView from "@/components/ResultSections/BreakdownView";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { KeywordView } from "@/components/ResultSections/KeywordView";
@@ -14,6 +14,9 @@ const Home: NextPage = () => {
   const [keywordData, setKeywordData] = useState<Keywords>();
 
   const [activeTab, setActiveTab] = useState<string>("breakdown");
+  const [model, setModel] = useState<Pick<RequestPayload, "model">>({
+    model: "gpt-3.5-turbo",
+  });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -38,6 +41,7 @@ const Home: NextPage = () => {
           <InputForm
             setResultData={setResultData}
             setIsLoading={setIsLoading}
+            setModel={setModel}
             isLoading={isLoading}
           />
 
@@ -70,6 +74,7 @@ const Home: NextPage = () => {
                     jobDescription={resultData}
                     setKeywordData={setKeywordData}
                     setActiveTab={setActiveTab}
+                    model={model}
                   />
                 </TabsContent>
                 <TabsContent value="keywords">

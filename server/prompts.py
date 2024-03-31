@@ -17,10 +17,14 @@ EXTRACTOR_MESSAGES = [
 KEYWORD_MESSAGES = [
     {
         "role": "system",
-        "content": "Extract relevant keywords from the job responsibilities to include in resume for ATS in recruiting process.",
+        "content": "Extract relevant keywords from the job responsibilities to include in a resume for the Applicant Tracking System (ATS) in the recruiting process.",
     },
     {
         "role": "user",
-        "content": """You are helping a job applicant in identifying the keywords from the job description to include in their resume for the Applicant Tracking System (ATS) used by recruiters.""",
+        "content": """You are assisting a job applicant in identifying keywords from the job description to include in their resume for the Applicant Tracking System (ATS) used by recruiters. Focus on extracting keywords that are directly related to job responsibilities, required qualifications, and skills.
+
+        For each keyword identified, provide the source and a brief reasoning on why this keyword is important to include in the resume. 
+        This will help the applicant's resume to be more aligned with what recruiters are looking for and increase its chances of being noticed by the ATS.
+        """,
     },
 ]

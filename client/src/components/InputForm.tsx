@@ -33,6 +33,7 @@ import { LoadingSpinner } from "./icons/LoadingSpinner";
 interface FormProps {
   setResultData: Dispatch<SetStateAction<JobDescription | undefined>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  setModel: Dispatch<SetStateAction<Pick<RequestPayload, "model">>>;
   isLoading: boolean;
 }
 
@@ -46,6 +47,7 @@ export type RequestPayload = z.infer<typeof FormSchema>;
 const InputForm: NextPage<FormProps> = ({
   setResultData,
   setIsLoading,
+  setModel,
   isLoading,
 }) => {
   const { toast } = useToast();
@@ -59,6 +61,7 @@ const InputForm: NextPage<FormProps> = ({
   });
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+    setModel({ model: values.model });
     setIsLoading(true);
 
     toast({
