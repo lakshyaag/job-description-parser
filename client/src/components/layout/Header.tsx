@@ -3,7 +3,15 @@ import { metadata } from "@/app/layout";
 import Link from "next/link";
 import Github from "../icons/GitHub";
 import { ToggleTheme } from "../icons/ThemeToggle";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import {
+  SignInButton,
+  SignOutButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
+import { Button } from "../ui/button";
 
 const Header = () => {
   return (
@@ -33,7 +41,12 @@ const Header = () => {
             <UserButton />
           </SignedIn>
           <SignedOut>
-            <SignInButton />
+            <SignInButton mode={"modal"}>
+              <Button>Sign in</Button>
+            </SignInButton>
+            <SignUpButton mode={"modal"}>
+              <Button variant={"outline"}>Sign up</Button>
+            </SignUpButton>
           </SignedOut>
         </div>
       </section>
