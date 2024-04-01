@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/select";
 import { LoadingSpinner } from "./icons/LoadingSpinner";
 import { useTheme } from "next-themes";
+import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 
 interface FormProps {
   setResultData: Dispatch<SetStateAction<JobDescription | undefined>>;
@@ -154,16 +155,29 @@ const InputForm: NextPage<FormProps> = ({
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? (
-              <div className="flex items-center justify-center space-x-2">
-                <span>Analyzing</span>
-                <LoadingSpinner />
-              </div>
-            ) : (
-              <div>Analyze</div>
-            )}{" "}
-          </Button>
+
+          <SignedIn>
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? (
+                <div className="flex items-center justify-center space-x-2">
+                  <span>Analyzing</span>
+                  <LoadingSpinner />
+                </div>
+              ) : (
+                <div>Analyze</div>
+              )}{" "}
+            </Button>
+          </SignedIn>
+
+          <SignedOut>
+            <div className="w-full">
+              <SignInButton mode="modal">
+                <Button type="button" className="w-full">
+                  Sign in/sign up to analyze!
+                </Button>
+              </SignInButton>
+            </div>
+          </SignedOut>
         </form>
       </Form>
     </div>

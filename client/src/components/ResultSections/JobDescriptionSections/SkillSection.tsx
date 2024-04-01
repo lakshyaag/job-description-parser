@@ -36,28 +36,37 @@ const SkillsSection: React.FC<SkillsProps> = ({ skills }) => {
 
   const renderSkillsList = (skills: Skill[]) => (
     <div className="flex flex-wrap gap-2">
-      {skills.map((skill, index) => (
-        <TooltipProvider key={index}>
-          <Tooltip>
-            <TooltipTrigger asChild>
+      <TooltipProvider>
+        {skills.map((skill, index) => (
+          <Tooltip key={index} delayDuration={300}>
+            <TooltipTrigger>
               <Badge
                 key={index}
-                className="text-white dark:text-gray-800 bg-blue-500 dark:bg-blue-700"
+                className="text-white bg-blue-500 dark:bg-teal-800"
               >
                 {skill.name}
 
                 {/* TODO: Add tooltip to show skill type & proficiency level */}
               </Badge>
             </TooltipTrigger>
-            <TooltipContent side="top" align="center">
-              <div className="p-2 bg-gray-800 text-white rounded-lg">
-                <p>Type: {skill.skill_type}</p>
-                <p>Proficiency: {skill.proficiency_level}</p>
+            <TooltipContent
+              side="top"
+              align="center"
+              className="bg-gray-800 text-white rounded-lg shadow-lg dark:bg-gray-200 dark:text-gray-800"
+            >
+              <div className="flex flex-col p-2 space-y-1">
+                <p className="text-sm font-semibold">
+                  Type: <span className="font-normal">{skill.skill_type}</span>
+                </p>
+                <p className="text-sm font-semibold">
+                  Proficiency:{" "}
+                  <span className="font-normal">{skill.proficiency_level}</span>
+                </p>
               </div>
             </TooltipContent>
           </Tooltip>
-        </TooltipProvider>
-      ))}
+        ))}
+      </TooltipProvider>
     </div>
   );
 
