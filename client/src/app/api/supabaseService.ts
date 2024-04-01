@@ -1,8 +1,8 @@
-import { createClient } from "@/lib/supabase/client";
+import { createSupabaseClient } from "@/lib/supabase/client";
 import { JobDescription, Keywords } from "@/lib/types";
 import { v4 as uuidv4 } from "uuid";
 
-const supabase = createClient();
+const supabase = createSupabaseClient();
 
 export async function insertJobDescription(
   query: string,

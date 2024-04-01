@@ -3,6 +3,7 @@ import { metadata } from "@/app/layout";
 import Link from "next/link";
 import Github from "../icons/GitHub";
 import { ToggleTheme } from "../icons/ThemeToggle";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const Header = () => {
   return (
@@ -17,7 +18,7 @@ const Header = () => {
             </div>
           </Link>
         </div>
-        <div className="flex items-end space-x-4">
+        <div className="flex items-center space-x-4">
           <a
             className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm text-gray-600 shadow-md transition-colors hover:bg-gray-100"
             href="https://github.com/lakshyaag/"
@@ -28,6 +29,12 @@ const Header = () => {
             <p>View on GitHub</p>
           </a>
           <ToggleTheme />
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
         </div>
       </section>
     </header>
