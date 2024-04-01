@@ -235,3 +235,32 @@ class Keywords(BaseModel):
         title="Keywords",
         description="List of keywords to include in resume, allowing for null values in the list",
     )
+
+
+class Recommendation(BaseModel):
+    index: int = Field(..., example=1)
+    original_sentence: str = Field(
+        ...,
+        title="Original Sentence",
+        description="The original sentence from the resume",
+    )
+
+    updated_sentence: Optional[str] = Field(
+        None,
+        title="Updated Sentence",
+        description="The updated sentence with the recommendation",
+    )
+
+
+class Recommendations(BaseModel):
+    recommendations: List[Recommendation] = Field(
+        ...,
+        title="Recommendations",
+        description="The list of recommendations for the resume. If there are no recommendations, the list will be empty.",
+    )
+
+
+class ResumePayload(BaseModel):
+    resume_file_id: str
+    model: str
+    keywords: Keywords

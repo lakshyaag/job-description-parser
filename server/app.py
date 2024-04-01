@@ -1,21 +1,36 @@
 import logging
 import os
+import re
 
 import instructor
 import uvicorn
 from dotenv import find_dotenv, load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from models import JobDescription, RequestPayload, Keywords
-from openai import AsyncOpenAI
-from prompts import EXTRACTOR_MESSAGES, KEYWORD_MESSAGES
+from langchain.document_loaders import PyPDFLoader
 from langsmith import traceable
 from langsmith.wrappers import wrap_openai
+from models import (
+    JobDescription,
+    Keywords,
+    RequestPayload,
+    Recommendations,
+    ResumePayload,
+)
+from openai import AsyncOpenAI
+from prompts import EXTRACTOR_MESSAGES, KEYWORD_MESSAGES, RECOMMENDATION_MESSAGES
+from supabase import Client, create_client
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("API Client")
 
 load_dotenv(find_dotenv())
+
+
+supabase: Client = create_client(
+    supabase_url=os.getenv("SUPABASE_URL"),
+    supabase_key=os.getenv("SUPABASE_KEY_SERVICE_ROLE"),
+)
 
 llm_client = instructor.patch(
     wrap_openai(
@@ -34,6 +49,36 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+async def downloadResume(file_id: str):
+    logger.info(f"Downloading resume file {file_id}...")
+
+    try:
+        file_path = supabase.storage.from_("resume").create_signed_url(
+            file_id, expires_in=1200
+        )["signedURL"]
+
+        loader = PyPDFLoader(file_path)
+
+        document = loader.load()
+
+        # Prepare the document for processing
+        page_contents = []
+
+        for page in document:
+            page = re.sub(r"[^\w\s\.\,]", "", page.page_content)
+            page_contents.append(
+                [re.sub(r"\s+", " ", x).strip() for x in page.splitlines()]
+            )
+
+        page_contents
+
+        return page_contents
+
+    except Exception as e:
+        logger.error(f"Error downloading resume: {e}")
+        raise HTTPException(status_code=500, detail=f"Internal Server Error. {str(e)}")
 
 
 async def call(
@@ -75,6 +120,23 @@ async def extract_keywords(request: RequestPayload) -> Keywords:
     messages = KEYWORD_MESSAGES + [{"role": "user", "content": request.context}]
 
     response = await call(llm_client, Keywords, messages, model=request.model)
+
+    return response
+
+
+@traceable("recommendations")
+@app.post("/recommendations/", response_model=Recommendations)
+async def generate_recommendations(request: ResumePayload) -> Recommendations:
+    logger.info("Generating recommendations for resume...")
+
+    document = await downloadResume(request.resume_file_id)
+
+    messages = RECOMMENDATION_MESSAGES + [
+        {"role": "user", "content": f"""Resume: \n{str(document)}"""},
+        {"role": "user", "content": f"""Keywords: {str(request.keywords.json())}"""},
+    ]
+
+    response = await call(llm_client, Recommendations, messages, model=request.model)
 
     return response
 

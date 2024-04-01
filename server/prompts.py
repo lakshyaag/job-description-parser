@@ -28,3 +28,10 @@ KEYWORD_MESSAGES = [
         """,
     },
 ]
+
+RECOMMENDATION_MESSAGES = [
+    {
+        "role": "system",
+        "content": "Please provide recommendations for the resume. Strip away additional formatting. You are provided with a list of keywords, reasoning, and source from the job description.",
+    },
+]
