@@ -1,3 +1,5 @@
+import { RequestPayload } from "@/components/InputForm";
+
 export interface AdditionalRequirement {
   index: number;
   description: string;
@@ -96,4 +98,20 @@ export interface Keyword {
 
 export interface Keywords {
   keywords: Keyword[];
+}
+
+export interface Recommendation {
+  index: number;
+  original_sentence: string;
+  updated_sentence?: string | null;
+}
+
+export interface Recommendations {
+  recommendations: Recommendation[];
+}
+
+export interface ResumePayload {
+  resume_file_id: string;
+  model: string;
+  keywords: Keywords | undefined;
 }

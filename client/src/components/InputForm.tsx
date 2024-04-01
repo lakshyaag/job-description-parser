@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { LoadingSpinner } from "./icons/LoadingSpinner";
+import { useTheme } from "next-themes";
 
 interface FormProps {
   setResultData: Dispatch<SetStateAction<JobDescription | undefined>>;
@@ -74,7 +75,6 @@ const InputForm: NextPage<FormProps> = ({
       const data = await analyze({ ...values });
       setResultData(data);
       // setResultData(result_data);
-
       try {
         await insertJobDescription(values.context, values.model, data);
         console.log("Successfully saved query response to database.");
