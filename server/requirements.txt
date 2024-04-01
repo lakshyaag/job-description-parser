@@ -1,8 +1,9 @@
 fastapi==0.110.0
 instructor==0.6.8
+langchain==0.1.13
 langsmith==0.1.38
 openai==1.14.3
 pydantic==2.6.4
 python-dotenv==1.0.1
+supabase==2.4.1
 uvicorn==0.29.0
-email-validator==2.1.1
