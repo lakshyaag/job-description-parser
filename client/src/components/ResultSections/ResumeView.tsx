@@ -24,6 +24,7 @@ import { useToast } from "../ui/use-toast";
 import Loading from "../Loading";
 import { Skeleton } from "../ui/skeleton";
 import ResumeRecommendationSection from "./ResumeRecommendation";
+import { useTheme } from "next-themes";
 
 interface ResumeViewProps {
   keywords: Keywords | undefined;
@@ -37,6 +38,8 @@ const FormSchema = z.object({
 });
 
 export const ResumeView: NextPage<ResumeViewProps> = ({ keywords, model }) => {
+  const { resolvedTheme } = useTheme();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [recommendations, setRecommendations] = useState<Recommendations>();
 
@@ -135,7 +138,10 @@ export const ResumeView: NextPage<ResumeViewProps> = ({ keywords, model }) => {
       {isLoading && <Skeleton className="h-48 w-full" />}
 
       {recommendations && (
-        <ResumeRecommendationSection recommendations={recommendations} />
+        <ResumeRecommendationSection
+          recommendations={recommendations}
+          theme={resolvedTheme}
+        />
       )}
     </div>
   );

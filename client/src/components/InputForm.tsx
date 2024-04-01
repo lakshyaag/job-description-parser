@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { LoadingSpinner } from "./icons/LoadingSpinner";
+import { useTheme } from "next-themes";
 
 interface FormProps {
   setResultData: Dispatch<SetStateAction<JobDescription | undefined>>;
