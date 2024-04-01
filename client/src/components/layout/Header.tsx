@@ -38,7 +38,7 @@ const Header = () => {
           </a>
           <ToggleTheme />
           <SignedIn>
-            <UserButton />
+            <UserButton afterSignOutUrl={"/"} />
           </SignedIn>
           <SignedOut>
             <SignInButton mode={"modal"}>
