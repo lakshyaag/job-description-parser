@@ -1,4 +1,4 @@
-import { Keywords } from "@/lib/types";
+import { Keywords, Recommendations } from "@/lib/types";
 import { NextPage } from "next";
 
 import {
@@ -18,9 +18,16 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { LoadingSpinner } from "../icons/LoadingSpinner";
 import { uploadResume } from "@/app/api/supabaseService";
+import { recommend } from "@/app/api/recommend";
+import { RequestPayload } from "../InputForm";
+import { useToast } from "../ui/use-toast";
+import Loading from "../Loading";
+import { Skeleton } from "../ui/skeleton";
+import ResumeRecommendationSection from "./ResumeRecommendation";
 
 interface ResumeViewProps {
   keywords: Keywords | undefined;
+  model: Pick<RequestPayload, "model">;
 }
 
 const FormSchema = z.object({
@@ -29,8 +36,11 @@ const FormSchema = z.object({
     .refine((file) => file.type === "application/pdf", "Invalid file type"),
 });
 
-export const ResumeView: NextPage<ResumeViewProps> = ({ keywords }) => {
+export const ResumeView: NextPage<ResumeViewProps> = ({ keywords, model }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [recommendations, setRecommendations] = useState<Recommendations>();
+
+  const { toast } = useToast();
 
   const resumeForm = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -38,19 +48,46 @@ export const ResumeView: NextPage<ResumeViewProps> = ({ keywords }) => {
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     // Upload resume to Supabase storage
-    try {
-      const response = await uploadResume(data.resume);
+    setIsLoading(true);
 
+    try {
+      const uploadResponse = await uploadResume(data.resume);
+      console.log(uploadResponse);
+
+      // Call recommendation endpoint
+
+      toast({
+        title: "Analyzing resume...",
+        description: "Please wait while we analyze your resume.",
+        variant: "default",
+      });
+
+      const payload = {
+        resume_file_id: uploadResponse.path,
+        model: model.model,
+        keywords: keywords,
+      };
+
+      const response = await recommend(payload);
       console.log(response);
+
+      setRecommendations(response);
     } catch (error) {
       console.error(error);
+      toast({
+        title: "Error",
+        description: "Failed to analyze resume. Please try again.",
+        variant: "destructive",
+      });
     }
+
+    setIsLoading(false);
   };
 
   return (
     <div className="flex flex-col gap-4">
       <p className="text-md font-bold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl lg:text-2xl">
-        Resume recommendations
+        Recommendations
       </p>
       <Form {...resumeForm}>
         <form
@@ -75,8 +112,8 @@ export const ResumeView: NextPage<ResumeViewProps> = ({ keywords }) => {
                   />
                 </FormControl>
                 <FormDescription>
-                  Paste your job description here. The more detailed, the
-                  better.
+                  Upload your resume in .pdf format only. A 1-page resume is
+                  ideal.
                 </FormDescription>
               </FormItem>
             )}
@@ -94,6 +131,12 @@ export const ResumeView: NextPage<ResumeViewProps> = ({ keywords }) => {
           </Button>
         </form>
       </Form>
+
+      {isLoading && <Skeleton className="h-48 w-full" />}
+
+      {recommendations && (
+        <ResumeRecommendationSection recommendations={recommendations} />
+      )}
     </div>
   );
 };

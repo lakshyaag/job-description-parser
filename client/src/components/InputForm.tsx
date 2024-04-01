@@ -71,20 +71,20 @@ const InputForm: NextPage<FormProps> = ({
     });
 
     try {
-      // const data = await analyze({ ...values });
-      // setResultData(data);
-      setResultData(result_data);
-      // try {
-      //   await insertJobDescription(values.context, values.model, data);
-      //   console.log("Successfully saved query response to database.");
-      // } catch (error) {
-      //   console.error("Failed to save query response to database:", error);
-      //   toast({
-      //     title: "Error",
-      //     description: "Failed to save your query. Please try again.",
-      //     variant: "destructive",
-      //   });
-      // }
+      const data = await analyze({ ...values });
+      setResultData(data);
+      // setResultData(result_data);
+      try {
+        await insertJobDescription(values.context, values.model, data);
+        console.log("Successfully saved query response to database.");
+      } catch (error) {
+        console.error("Failed to save query response to database:", error);
+        toast({
+          title: "Error",
+          description: "Failed to save your query. Please try again.",
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       console.error("Failed to analyze job description:", error);
       toast({

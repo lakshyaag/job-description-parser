@@ -5,19 +5,18 @@ import { NextPage } from "next";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Accordion } from "@/components/ui/accordion";
-import JobDetailSection from "@/components/JobDescriptionSections/JobDetailSection";
-import ContactSection from "@/components/JobDescriptionSections/ContactSection";
-import QualificationsSection from "../JobDescriptionSections/QualificationSection";
-import SkillsSection from "../JobDescriptionSections/SkillSection";
-import EducationSection from "../JobDescriptionSections/EducationSection";
-import CompanyInfoSection from "../JobDescriptionSections/CompanySection";
-import JobDetailsBadges from "../JobDescriptionSections/JobDetailBadges";
+import JobDetailSection from "@/components/ResultSections/JobDescriptionSections/JobDetailSection";
+import ContactSection from "@/components/ResultSections/JobDescriptionSections/ContactSection";
+import QualificationsSection from "./JobDescriptionSections/QualificationSection";
+import SkillsSection from "./JobDescriptionSections/SkillSection";
+import EducationSection from "./JobDescriptionSections/EducationSection";
+import CompanyInfoSection from "./JobDescriptionSections/CompanySection";
+import JobDetailsBadges from "./JobDescriptionSections/JobDetailBadges";
 import { Button } from "../ui/button";
 import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "../ui/use-toast";

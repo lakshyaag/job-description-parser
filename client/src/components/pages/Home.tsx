@@ -89,7 +89,7 @@ const Home: NextPage = () => {
                   <KeywordView keywords={keywordData} />
                 </TabsContent>
                 <TabsContent value="resume">
-                  <ResumeView keywords={keywordData} />
+                  <ResumeView keywords={keywordData} model={model} />
                 </TabsContent>
               </Tabs>
             </div>
