@@ -15,7 +15,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import ReactDiffViewer from "react-diff-viewer-continued";
+import ReactDiffViewer, { DiffMethod } from "react-diff-viewer-continued";
 
 import { Recommendations } from "@/lib/types";
 import {
@@ -86,6 +86,7 @@ const ResumeRecommendationSection: React.FC<ResumeRecommendationProps> = ({
                             useDarkTheme={theme === "dark"}
                             leftTitle="Original"
                             rightTitle="Suggested"
+                            compareMethod={DiffMethod.WORDS_WITH_SPACE}
                           />
                         </CollapsibleContent>
                       </Collapsible>

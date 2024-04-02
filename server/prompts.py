@@ -32,6 +32,17 @@ KEYWORD_MESSAGES = [
 RECOMMENDATION_MESSAGES = [
     {
         "role": "system",
-        "content": "Please provide recommendations for the resume. Strip away additional formatting. You are provided with a list of keywords, reasoning, and source from the job description.",
+        "content": """Please provide recommendations for the resume in the specified schema. Strip away additional formatting. 
+        """,
+    },
+    {
+        "role": "user",
+        "content": """You are helping a job applicant improve their resume based on the extracted keywords and reasoning provided. 
+        Focus on enhancing the professional experience, educational background, and skills sections of the resume.
+
+        Incorporate the keywords and reasoning from the job description to make the resume more relevant to the job requirements.
+        Do not suggest grammatical changes or rephrase the content, only provide recommendations to enhance the resume based on the extracted keywords.
+        Ensure that the recommendation is well-structured, concise, and tailored to the specific job description.
+        """,
     },
 ]

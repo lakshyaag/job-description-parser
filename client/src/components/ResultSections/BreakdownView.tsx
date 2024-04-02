@@ -28,14 +28,12 @@ import { insertKeywords } from "@/app/api/supabaseService";
 interface BreakdownViewProps {
   jobDescription: JobDescription;
   setKeywordData: Dispatch<SetStateAction<Keywords | undefined>>;
-  setActiveTab: Dispatch<SetStateAction<string>>;
   model: Pick<RequestPayload, "model">;
 }
 
 export const BreakdownView: NextPage<BreakdownViewProps> = ({
   jobDescription,
   setKeywordData,
-  setActiveTab,
   model,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -61,7 +59,6 @@ export const BreakdownView: NextPage<BreakdownViewProps> = ({
     try {
       const data = await keywords(payload);
       setKeywordData(data);
-      setActiveTab("keywords");
 
       try {
         await insertKeywords(payload.context, payload.model, data);
