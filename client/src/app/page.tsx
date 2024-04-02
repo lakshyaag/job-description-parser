@@ -2,7 +2,7 @@
 
 import { NextPage } from "next";
 import { useRef, useState } from "react";
-import { JobDescription, Keywords } from "@/lib/types";
+import { JobDescription, Keywords, Recommendations } from "@/lib/types";
 import InputForm, { RequestPayload } from "@/components/InputForm";
 import BreakdownView from "@/components/ResultSections/BreakdownView";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -12,8 +12,9 @@ import { ResumeView } from "@/components/ResultSections/ResumeView";
 import Landing from "@/components/Landing";
 
 const Home: NextPage = () => {
-  const [resultData, setResultData] = useState<JobDescription>();
+  const [jobDescData, setJobDescData] = useState<JobDescription>();
   const [keywordData, setKeywordData] = useState<Keywords>();
+  const [recommendations, setRecommendations] = useState<Recommendations>();
 
   const [activeTab, setActiveTab] = useState<string>("breakdown");
   const [model, setModel] = useState<Pick<RequestPayload, "model">>({
@@ -33,7 +34,7 @@ const Home: NextPage = () => {
             </div>
             <div className="w-full md:w-1/2">
               <InputForm
-                setResultData={setResultData}
+                setJobDescData={setJobDescData}
                 setIsLoading={setIsLoading}
                 setModel={setModel}
                 isLoading={isLoading}
@@ -46,7 +47,7 @@ const Home: NextPage = () => {
         <div className="container mx-auto px-4 md:px-8">
           {isLoading ? (
             <Loading />
-          ) : resultData ? (
+          ) : jobDescData ? (
             <div className="mx-auto">
               <Tabs value={activeTab}>
                 <TabsList className="mb-6 gap-4 flex flex-col md:flex-row">
@@ -73,18 +74,23 @@ const Home: NextPage = () => {
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="breakdown">
-                  <BreakdownView jobDescription={resultData} />
+                  <BreakdownView jobDescription={jobDescData} />
                 </TabsContent>
                 <TabsContent value="keywords">
                   <KeywordView
-                    jobDescription={resultData}
+                    jobDescription={jobDescData}
                     keywordData={keywordData}
                     setKeywordData={setKeywordData}
                     model={model}
                   />
                 </TabsContent>
                 <TabsContent value="resume">
-                  <ResumeView keywords={keywordData} model={model} />
+                  <ResumeView
+                    keywords={keywordData}
+                    model={model}
+                    recommendations={recommendations}
+                    setRecommendations={setRecommendations}
+                  />
                 </TabsContent>
               </Tabs>
             </div>

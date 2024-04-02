@@ -16,6 +16,7 @@ import { useToast } from "../ui/use-toast";
 import { insertKeywords } from "@/app/api/supabaseService";
 import { RequestPayload } from "../InputForm";
 import { keywords as queryKeywords } from "@/app/api/keywords";
+import { keywords_data } from "@/lib/utils";
 interface KeywordViewProps {
   jobDescription: JobDescription;
   keywordData: Keywords | undefined;
@@ -52,20 +53,21 @@ export const KeywordView: NextPage<KeywordViewProps> = ({
     };
 
     try {
-      const data = await queryKeywords(payload);
-      setKeywordData(data);
+      // const data = await queryKeywords(payload);
+      // setKeywordData(data);
 
-      try {
-        await insertKeywords(payload.context, payload.model, data);
-        console.log("Successfully saved keyword response to database.");
-      } catch (error) {
-        console.error("Failed to save keyword response to database:", error);
-        toast({
-          title: "Error",
-          description: "Failed to save keywords. Please try again.",
-          variant: "destructive",
-        });
-      }
+      // try {
+      //   await insertKeywords(payload.context, payload.model, data);
+      //   console.log("Successfully saved keyword response to database.");
+      // } catch (error) {
+      //   console.error("Failed to save keyword response to database:", error);
+      //   toast({
+      //     title: "Error",
+      //     description: "Failed to save keywords. Please try again.",
+      //     variant: "destructive",
+      //   });
+      // }
+      setKeywordData(keywords_data);
     } catch (error) {
       console.error("Error:", error);
       toast({

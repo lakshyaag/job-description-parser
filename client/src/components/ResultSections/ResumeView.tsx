@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { LoadingSpinner } from "../icons/LoadingSpinner";
 import { insertRecommendations, uploadResume } from "@/app/api/supabaseService";
 import { recommend } from "@/app/api/recommend";
@@ -25,10 +25,13 @@ import Loading from "../Loading";
 import { Skeleton } from "../ui/skeleton";
 import ResumeRecommendationSection from "./ResumeRecommendation";
 import { useTheme } from "next-themes";
+import { resume_data } from "@/lib/utils";
 
 interface ResumeViewProps {
   keywords: Keywords | undefined;
   model: Pick<RequestPayload, "model">;
+  recommendations: Recommendations | undefined;
+  setRecommendations: Dispatch<SetStateAction<Recommendations | undefined>>;
 }
 
 const FormSchema = z.object({
@@ -37,11 +40,15 @@ const FormSchema = z.object({
     .refine((file) => file.type === "application/pdf", "Invalid file type"),
 });
 
-export const ResumeView: NextPage<ResumeViewProps> = ({ keywords, model }) => {
+export const ResumeView: NextPage<ResumeViewProps> = ({
+  keywords,
+  model,
+  recommendations,
+  setRecommendations,
+}) => {
   const { resolvedTheme } = useTheme();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [recommendations, setRecommendations] = useState<Recommendations>();
 
   const { toast } = useToast();
 
@@ -54,42 +61,43 @@ export const ResumeView: NextPage<ResumeViewProps> = ({ keywords, model }) => {
     setIsLoading(true);
 
     try {
-      const uploadResponse = await uploadResume(data.resume);
-      console.log(uploadResponse);
+      //   const uploadResponse = await uploadResume(data.resume);
+      //   console.log(uploadResponse);
 
-      // Call recommendation endpoint
+      //   // Call recommendation endpoint
 
-      toast({
-        title: "Analyzing resume...",
-        description: "Please wait while we analyze your resume.",
-        variant: "default",
-      });
+      //   toast({
+      //     title: "Analyzing resume...",
+      //     description: "Please wait while we analyze your resume.",
+      //     variant: "default",
+      //   });
 
-      const payload = {
-        resume_file_id: uploadResponse.path,
-        model: model.model,
-        keywords: keywords,
-      };
+      //   const payload = {
+      //     resume_file_id: uploadResponse.path,
+      //     model: model.model,
+      //     keywords: keywords,
+      //   };
 
-      const response = await recommend(payload);
-      console.log(response);
+      //   const response = await recommend(payload);
+      //   console.log(response);
 
-      try {
-        await insertRecommendations(uploadResponse.path, model.model, response);
-        console.log("Successfully saved recommendation response to database.");
-      } catch (error) {
-        console.error(
-          "Failed to save recommendation response to database:",
-          error
-        );
-        toast({
-          title: "Error",
-          description: "Failed to save recommendations. Please try again.",
-          variant: "destructive",
-        });
-      }
+      //   try {
+      //     await insertRecommendations(uploadResponse.path, model.model, response);
+      //     console.log("Successfully saved recommendation response to database.");
+      //   } catch (error) {
+      //     console.error(
+      //       "Failed to save recommendation response to database:",
+      //       error
+      //     );
+      //     toast({
+      //       title: "Error",
+      //       description: "Failed to save recommendations. Please try again.",
+      //       variant: "destructive",
+      //     });
+      //   }
 
-      setRecommendations(response);
+      //   setRecommendations(response);
+      setRecommendations(resume_data);
     } catch (error) {
       console.error(error);
       toast({

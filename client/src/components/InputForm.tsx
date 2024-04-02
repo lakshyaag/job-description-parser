@@ -33,7 +33,7 @@ import { useTheme } from "next-themes";
 import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 
 interface FormProps {
-  setResultData: Dispatch<SetStateAction<JobDescription | undefined>>;
+  setJobDescData: Dispatch<SetStateAction<JobDescription | undefined>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   setModel: Dispatch<SetStateAction<Pick<RequestPayload, "model">>>;
   isLoading: boolean;
@@ -47,7 +47,7 @@ const FormSchema = z.object({
 export type RequestPayload = z.infer<typeof FormSchema>;
 
 const InputForm: NextPage<FormProps> = ({
-  setResultData,
+  setJobDescData,
   setIsLoading,
   setModel,
   isLoading,
@@ -74,8 +74,8 @@ const InputForm: NextPage<FormProps> = ({
 
     try {
       // const data = await analyze({ ...values });
-      // setResultData(data);
-      setResultData(result_data);
+      // setJobDescData(data);
+      setJobDescData(result_data);
       // try {
       //   await insertJobDescription(values.context, values.model, data);
       //   console.log("Successfully saved query response to database.");
