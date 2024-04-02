@@ -157,7 +157,7 @@ const InputForm: NextPage<FormProps> = ({
           />
 
           <SignedIn>
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading} className="w-full">
               {isLoading ? (
                 <div className="flex items-center justify-center space-x-2">
                   <span>Analyzing</span>
