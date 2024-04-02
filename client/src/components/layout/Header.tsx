@@ -30,6 +30,7 @@ const Header = () => {
         <div className="hidden md:flex items-center space-x-4">
           {/* Desktop menu items */}
           <a
+            title="View on GitHub"
             className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm text-gray-600 shadow-md transition-colors hover:bg-gray-100"
             href="https://github.com/lakshyaag/"
             target="_blank"
@@ -62,6 +63,7 @@ const Header = () => {
               <div className="flex flex-col space-y-4 items-center">
                 {/* Mobile menu items */}
                 <a
+                  title="View on GitHub"
                   className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm text-gray-600 shadow-md transition-colors hover:bg-gray-100"
                   href="https://github.com/lakshyaag/"
                   target="_blank"
