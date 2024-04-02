@@ -73,20 +73,20 @@ const InputForm: NextPage<FormProps> = ({
     });
 
     try {
-      const data = await analyze({ ...values });
-      setResultData(data);
-      // setResultData(result_data);
-      try {
-        await insertJobDescription(values.context, values.model, data);
-        console.log("Successfully saved query response to database.");
-      } catch (error) {
-        console.error("Failed to save query response to database:", error);
-        toast({
-          title: "Error",
-          description: "Failed to save your query. Please try again.",
-          variant: "destructive",
-        });
-      }
+      // const data = await analyze({ ...values });
+      // setResultData(data);
+      setResultData(result_data);
+      // try {
+      //   await insertJobDescription(values.context, values.model, data);
+      //   console.log("Successfully saved query response to database.");
+      // } catch (error) {
+      //   console.error("Failed to save query response to database:", error);
+      //   toast({
+      //     title: "Error",
+      //     description: "Failed to save your query. Please try again.",
+      //     variant: "destructive",
+      //   });
+      // }
     } catch (error) {
       console.error("Failed to analyze job description:", error);
       toast({
@@ -101,7 +101,7 @@ const InputForm: NextPage<FormProps> = ({
   };
 
   return (
-    <div className="flex flex-col gap-4 w-full md:w-1/2">
+    <div className="flex flex-col gap-4 w-full">
       <p className="text-lg font-bold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl lg:text-2xl">
         Paste your job description here
       </p>

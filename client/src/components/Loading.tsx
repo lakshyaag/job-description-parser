@@ -5,8 +5,8 @@ import { Skeleton } from "./ui/skeleton";
 
 const Loading: NextPage = () => {
   return (
-    <div className="flex flex-col gap-4 w-full md:w-1/2 ">
-      <p className="text-lg font-bold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl lg:text-2xl">
+    <div className="flex flex-col gap-4 w-full">
+      <p className="text-lg font-bold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl lg:text-2xl animate-pulse">
         Please wait...
       </p>
       <div className="w-full space-y-2">

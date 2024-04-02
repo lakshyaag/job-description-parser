@@ -1,7 +1,7 @@
 "use client";
 
 import { NextPage } from "next";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { JobDescription, Keywords } from "@/lib/types";
 import InputForm, { RequestPayload } from "@/components/InputForm";
 import BreakdownView from "@/components/ResultSections/BreakdownView";
@@ -20,58 +20,70 @@ const Home: NextPage = () => {
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const resultSectionRef = useRef<HTMLElement>(null);
 
   return (
-    <main className="flex w-full flex-col min-h-screen dark:bg-black bg-white dark:bg-dot-white/[0.1] bg-dot-black/[0.1]">
-      <section className="h-1/5 w-full py-4">
-        <div className="container mx-auto flex h-full items-center justify-center px-8 md:px-12 text-center gap-4">
-          <div>
-            <p className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-400 dark:from-blue-500 dark:to-green-400 sm:text-3xl md:text-4xl">
-              Simplify your job search in seconds.
-            </p>
-            <p className="text-gray-500 dark:text-gray-400 md:text-lg">
-              Paste your job description and get a detailed breakdown of
-              everything you need to know.
-            </p>
+    <main className="min-h-screen bg-white dark:bg-black">
+      <section className="py-12 md:py-20">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="mb-8 md:mb-0 w-full md:w-1/2">
+              <h1 className="text-4xl font-bold text-purple-600 dark:text-blue-500 mb-4">
+                Unlock Your Dream Job with JD Analyzer
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400 text-lg mb-8">
+                Job searching made simple in just three easy steps:
+              </p>
+              <ol className="list-decimal list-inside text-gray-600 dark:text-gray-400 text-lg mb-8">
+                <li>Paste your job description</li>
+                <li>
+                  Get a detailed breakdown and personalized recommendations
+                </li>
+                <li>Optimize your resume and land your dream job!</li>
+              </ol>
+              <p className="text-gray-600 dark:text-gray-400 text-lg">
+                With JD Analyzer, you&apos;ll gain valuable insights into job
+                requirements, discover essential keywords to include in your
+                resume, and receive tailored suggestions to make your
+                application stand out. Take control of your job search today!
+              </p>
+            </div>
+            <div className="w-full md:w-1/2">
+              <InputForm
+                setResultData={setResultData}
+                setIsLoading={setIsLoading}
+                setModel={setModel}
+                isLoading={isLoading}
+              />
+            </div>
           </div>
         </div>
       </section>
-
-      <section className="h-4/5 w-full py-4">
-        <div className="container mx-auto flex flex-col md:flex-row h-full justify-between items-start px-4 md:px-6 gap-8">
-          <InputForm
-            setResultData={setResultData}
-            setIsLoading={setIsLoading}
-            setModel={setModel}
-            isLoading={isLoading}
-          />
-
+      <section ref={resultSectionRef} className="py-8 md:py-12">
+        <div className="container mx-auto px-4 md:px-8">
           {isLoading ? (
             <Loading />
           ) : resultData ? (
-            <div className="flex flex-col gap-4 w-full md:w-1/2 ">
+            <div className="mx-auto">
               <Tabs value={activeTab}>
-                <TabsList
-                  aria-label="Results Tabs"
-                  className="flex gap-4 justify-center w-full"
-                >
+                <TabsList className="mb-6 gap-4 flex flex-col md:flex-row">
                   <TabsTrigger
                     value="breakdown"
-                    className="flex-grow"
+                    className="w-full"
                     onClick={() => setActiveTab("breakdown")}
                   >
                     Overview
                   </TabsTrigger>
                   <TabsTrigger
                     value="keywords"
-                    className="flex-grow"
+                    className="w-full"
                     onClick={() => setActiveTab("keywords")}
                   >
                     Keywords
                   </TabsTrigger>
                   <TabsTrigger
                     value="resume"
-                    className="flex-grow"
+                    className="w-full"
                     onClick={() => setActiveTab("resume")}
                   >
                     Resume
@@ -92,9 +104,7 @@ const Home: NextPage = () => {
                 </TabsContent>
               </Tabs>
             </div>
-          ) : (
-            <></>
-          )}
+          ) : null}
         </div>
       </section>
     </main>
