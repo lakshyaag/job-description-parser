@@ -73,14 +73,15 @@ const Home: NextPage = () => {
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="breakdown">
-                  <BreakdownView
+                  <BreakdownView jobDescription={resultData} />
+                </TabsContent>
+                <TabsContent value="keywords">
+                  <KeywordView
                     jobDescription={resultData}
+                    keywordData={keywordData}
                     setKeywordData={setKeywordData}
                     model={model}
                   />
-                </TabsContent>
-                <TabsContent value="keywords">
-                  <KeywordView keywords={keywordData} />
                 </TabsContent>
                 <TabsContent value="resume">
                   <ResumeView keywords={keywordData} model={model} />

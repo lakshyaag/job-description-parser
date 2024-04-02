@@ -27,62 +27,11 @@ import { insertKeywords } from "@/app/api/supabaseService";
 
 interface BreakdownViewProps {
   jobDescription: JobDescription;
-  setKeywordData: Dispatch<SetStateAction<Keywords | undefined>>;
-  model: Pick<RequestPayload, "model">;
 }
 
 export const BreakdownView: NextPage<BreakdownViewProps> = ({
   jobDescription,
-  setKeywordData,
-  model,
 }) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const getKeywords = async () => {
-    setIsLoading(true);
-
-    toast({
-      title: "Generating keywords...",
-      description: "Please wait while we look for keywords.",
-      variant: "default",
-    });
-
-    const payload = {
-      context: JSON.stringify({
-        responsibilities: jobDescription.responsibilities,
-        required_qualifications: jobDescription.qualifications_required,
-        skills: jobDescription.skills,
-      }),
-      model: model.model,
-    };
-
-    try {
-      const data = await keywords(payload);
-      setKeywordData(data);
-
-      try {
-        await insertKeywords(payload.context, payload.model, data);
-        console.log("Successfully saved keyword response to database.");
-      } catch (error) {
-        console.error("Failed to save keyword response to database:", error);
-        toast({
-          title: "Error",
-          description: "Failed to save keywords. Please try again.",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      toast({
-        title: "An error occurred",
-        description: "Failed to generate keywords. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <div className="flex flex-col gap-4">
       <p className="text-md font-bold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl lg:text-2xl">
@@ -112,23 +61,6 @@ export const BreakdownView: NextPage<BreakdownViewProps> = ({
                   salary_range={jobDescription.salary_range}
                 />
               </CardContent>
-              <CardFooter>
-                <Button
-                  className="w-full"
-                  variant="default"
-                  onClick={getKeywords}
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <div className="flex items-center justify-center space-x-2">
-                      <span>Generating keywords</span>
-                      <LoadingSpinner />
-                    </div>
-                  ) : (
-                    <div>Generate keywords</div>
-                  )}
-                </Button>
-              </CardFooter>
             </div>
           </Card>
 
