@@ -9,8 +9,9 @@ import "@/lib/styles/globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 
-const APP_NAME = "Job Description Parser";
-const APP_DESCRIPTION = "Simplify your job search in seconds.";
+const APP_NAME = "Job Find";
+const APP_DESCRIPTION =
+  "Supercharge your job search with Job Find. Get a detailed breakdown of job descriptions, discover essential keywords to include in your resume, and receive tailored suggestions to make your application stand out. Take control of your job search today!";
 
 export const metadata: Metadata = {
   title: APP_NAME,

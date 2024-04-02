@@ -25,7 +25,7 @@ const Home: NextPage = () => {
   const resultSectionRef = useRef<HTMLElement>(null);
 
   return (
-    <main className="min-h-screen w-full dark:bg-black bg-white  dark:bg-dot-white/[0.1] bg-dot-black/[0.1]">
+    <main className="min-h-screen w-full dark:bg-black bg-white  dark:bg-dot-white/[0.1] bg-dot-black/[0.1] --font-sans">
       <section className="py-4 md:py-8">
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
