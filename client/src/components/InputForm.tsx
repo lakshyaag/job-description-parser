@@ -37,6 +37,7 @@ interface FormProps {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   setModel: Dispatch<SetStateAction<Pick<RequestPayload, "model">>>;
   isLoading: boolean;
+  resultSectionRef: React.RefObject<HTMLElement>;
 }
 
 const FormSchema = z.object({
@@ -51,6 +52,7 @@ const InputForm: NextPage<FormProps> = ({
   setIsLoading,
   setModel,
   isLoading,
+  resultSectionRef,
 }) => {
   const { toast } = useToast();
 
@@ -73,20 +75,20 @@ const InputForm: NextPage<FormProps> = ({
     });
 
     try {
-      // const data = await analyze({ ...values });
-      // setJobDescData(data);
-      setJobDescData(result_data);
-      // try {
-      //   await insertJobDescription(values.context, values.model, data);
-      //   console.log("Successfully saved query response to database.");
-      // } catch (error) {
-      //   console.error("Failed to save query response to database:", error);
-      //   toast({
-      //     title: "Error",
-      //     description: "Failed to save your query. Please try again.",
-      //     variant: "destructive",
-      //   });
-      // }
+      const data = await analyze({ ...values });
+      setJobDescData(data);
+      // setJobDescData(result_data);
+      try {
+        await insertJobDescription(values.context, values.model, data);
+        console.log("Successfully saved query response to database.");
+      } catch (error) {
+        console.error("Failed to save query response to database:", error);
+        toast({
+          title: "Error",
+          description: "Failed to save your query. Please try again.",
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       console.error("Failed to analyze job description:", error);
       toast({
@@ -98,6 +100,12 @@ const InputForm: NextPage<FormProps> = ({
     }
 
     setIsLoading(false);
+
+    // Scroll to result section
+    resultSectionRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
   };
 
   return (

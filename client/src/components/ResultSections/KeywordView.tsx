@@ -53,21 +53,21 @@ export const KeywordView: NextPage<KeywordViewProps> = ({
     };
 
     try {
-      // const data = await queryKeywords(payload);
-      // setKeywordData(data);
+      const data = await queryKeywords(payload);
+      setKeywordData(data);
 
-      // try {
-      //   await insertKeywords(payload.context, payload.model, data);
-      //   console.log("Successfully saved keyword response to database.");
-      // } catch (error) {
-      //   console.error("Failed to save keyword response to database:", error);
-      //   toast({
-      //     title: "Error",
-      //     description: "Failed to save keywords. Please try again.",
-      //     variant: "destructive",
-      //   });
-      // }
-      setKeywordData(keywords_data);
+      try {
+        await insertKeywords(payload.context, payload.model, data);
+        console.log("Successfully saved keyword response to database.");
+      } catch (error) {
+        console.error("Failed to save keyword response to database:", error);
+        toast({
+          title: "Error",
+          description: "Failed to save keywords. Please try again.",
+          variant: "destructive",
+        });
+      }
+      // setKeywordData(keywords_data);
     } catch (error) {
       console.error("Error:", error);
       toast({
@@ -82,9 +82,6 @@ export const KeywordView: NextPage<KeywordViewProps> = ({
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-md font-bold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl lg:text-2xl">
-        Important keywords
-      </p>
       {keywordData ? (
         <Table>
           <TableHeader>
@@ -110,21 +107,26 @@ export const KeywordView: NextPage<KeywordViewProps> = ({
           </TableBody>
         </Table>
       ) : (
-        <Button
-          className="w-full"
-          variant="default"
-          onClick={getKeywords}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <div className="flex items-center justify-center space-x-2">
-              <span>Generating keywords</span>
-              <LoadingSpinner />
-            </div>
-          ) : (
-            <div>Generate keywords</div>
-          )}
-        </Button>
+        <div className="flex flex-col gap-4 items-center">
+          <p className="font-semibold">
+            Click the button below to generate keywords from the job description
+          </p>
+          <Button
+            className="w-full"
+            variant="default"
+            onClick={getKeywords}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <div className="flex items-center justify-center space-x-2">
+                <span>Generating keywords</span>
+                <LoadingSpinner />
+              </div>
+            ) : (
+              <div>Generate keywords</div>
+            )}
+          </Button>
+        </div>
       )}
     </div>
   );

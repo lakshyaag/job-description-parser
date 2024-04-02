@@ -61,43 +61,43 @@ export const ResumeView: NextPage<ResumeViewProps> = ({
     setIsLoading(true);
 
     try {
-      //   const uploadResponse = await uploadResume(data.resume);
-      //   console.log(uploadResponse);
+      const uploadResponse = await uploadResume(data.resume);
+      console.log(uploadResponse);
 
       //   // Call recommendation endpoint
 
-      //   toast({
-      //     title: "Analyzing resume...",
-      //     description: "Please wait while we analyze your resume.",
-      //     variant: "default",
-      //   });
+      toast({
+        title: "Analyzing resume...",
+        description: "Please wait while we analyze your resume.",
+        variant: "default",
+      });
 
-      //   const payload = {
-      //     resume_file_id: uploadResponse.path,
-      //     model: model.model,
-      //     keywords: keywords,
-      //   };
+      const payload = {
+        resume_file_id: uploadResponse.path,
+        model: model.model,
+        keywords: keywords,
+      };
 
-      //   const response = await recommend(payload);
-      //   console.log(response);
+      const response = await recommend(payload);
+      console.log(response);
 
-      //   try {
-      //     await insertRecommendations(uploadResponse.path, model.model, response);
-      //     console.log("Successfully saved recommendation response to database.");
-      //   } catch (error) {
-      //     console.error(
-      //       "Failed to save recommendation response to database:",
-      //       error
-      //     );
-      //     toast({
-      //       title: "Error",
-      //       description: "Failed to save recommendations. Please try again.",
-      //       variant: "destructive",
-      //     });
-      //   }
+      try {
+        await insertRecommendations(uploadResponse.path, model.model, response);
+        console.log("Successfully saved recommendation response to database.");
+      } catch (error) {
+        console.error(
+          "Failed to save recommendation response to database:",
+          error
+        );
+        toast({
+          title: "Error",
+          description: "Failed to save recommendations. Please try again.",
+          variant: "destructive",
+        });
+      }
 
-      //   setRecommendations(response);
-      setRecommendations(resume_data);
+      setRecommendations(response);
+      // setRecommendations(resume_data);
     } catch (error) {
       console.error(error);
       toast({
@@ -112,9 +112,6 @@ export const ResumeView: NextPage<ResumeViewProps> = ({
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-md font-bold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl lg:text-2xl">
-        Recommendations
-      </p>
       {keywords ? (
         <Form {...resumeForm}>
           <form
@@ -159,9 +156,11 @@ export const ResumeView: NextPage<ResumeViewProps> = ({
           </form>
         </Form>
       ) : (
-        <p className="text-lg text-gray-800 dark:text-gray-200">
-          Please generate keywords first.
-        </p>
+        <div className="flex flex-col gap-4 items-center">
+          <p className="font-semibold">
+            Please generate keywords before uploading your resume
+          </p>
+        </div>
       )}
 
       {isLoading && <Skeleton className="h-48 w-full" />}

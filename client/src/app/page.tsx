@@ -1,7 +1,7 @@
 "use client";
 
 import { NextPage } from "next";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { JobDescription, Keywords, Recommendations } from "@/lib/types";
 import InputForm, { RequestPayload } from "@/components/InputForm";
 import BreakdownView from "@/components/ResultSections/BreakdownView";
@@ -26,10 +26,10 @@ const Home: NextPage = () => {
 
   return (
     <main className="min-h-screen w-full dark:bg-black bg-white  dark:bg-dot-white/[0.1] bg-dot-black/[0.1]">
-      <section className="py-12 md:py-20">
+      <section className="py-4 md:py-8">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="mb-8 md:mb-0 w-full md:w-1/2">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
+            <div className="w-full md:w-1/2">
               <Landing />
             </div>
             <div className="w-full md:w-1/2">
@@ -38,19 +38,20 @@ const Home: NextPage = () => {
                 setIsLoading={setIsLoading}
                 setModel={setModel}
                 isLoading={isLoading}
+                resultSectionRef={resultSectionRef}
               />
             </div>
           </div>
         </div>
       </section>
-      <section ref={resultSectionRef} className="py-8 md:py-12">
+      <section ref={resultSectionRef} className="py-2 md:py-4">
         <div className="container mx-auto px-4 md:px-8">
           {isLoading ? (
             <Loading />
           ) : jobDescData ? (
             <div className="mx-auto">
               <Tabs value={activeTab}>
-                <TabsList className="mb-6 gap-4 flex flex-col md:flex-row">
+                <TabsList className="m-6 gap-4 flex flex-row">
                   <TabsTrigger
                     value="breakdown"
                     className="w-full"
@@ -63,14 +64,14 @@ const Home: NextPage = () => {
                     className="w-full"
                     onClick={() => setActiveTab("keywords")}
                   >
-                    Keywords
+                    Important Keywords
                   </TabsTrigger>
                   <TabsTrigger
                     value="resume"
                     className="w-full"
                     onClick={() => setActiveTab("resume")}
                   >
-                    Resume
+                    Resume Recommendations
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="breakdown">
