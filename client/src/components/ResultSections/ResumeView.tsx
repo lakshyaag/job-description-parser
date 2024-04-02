@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { LoadingSpinner } from "../icons/LoadingSpinner";
 import { insertRecommendations, uploadResume } from "@/app/api/supabaseService";
 import { recommend } from "@/app/api/recommend";
@@ -25,10 +25,13 @@ import Loading from "../Loading";
 import { Skeleton } from "../ui/skeleton";
 import ResumeRecommendationSection from "./ResumeRecommendation";
 import { useTheme } from "next-themes";
+import { resume_data } from "@/lib/utils";
 
 interface ResumeViewProps {
   keywords: Keywords | undefined;
   model: Pick<RequestPayload, "model">;
+  recommendations: Recommendations | undefined;
+  setRecommendations: Dispatch<SetStateAction<Recommendations | undefined>>;
 }
 
 const FormSchema = z.object({
@@ -37,11 +40,15 @@ const FormSchema = z.object({
     .refine((file) => file.type === "application/pdf", "Invalid file type"),
 });
 
-export const ResumeView: NextPage<ResumeViewProps> = ({ keywords, model }) => {
+export const ResumeView: NextPage<ResumeViewProps> = ({
+  keywords,
+  model,
+  recommendations,
+  setRecommendations,
+}) => {
   const { resolvedTheme } = useTheme();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [recommendations, setRecommendations] = useState<Recommendations>();
 
   const { toast } = useToast();
 
@@ -57,7 +64,7 @@ export const ResumeView: NextPage<ResumeViewProps> = ({ keywords, model }) => {
       const uploadResponse = await uploadResume(data.resume);
       console.log(uploadResponse);
 
-      // Call recommendation endpoint
+      //   // Call recommendation endpoint
 
       toast({
         title: "Analyzing resume...",
@@ -90,6 +97,7 @@ export const ResumeView: NextPage<ResumeViewProps> = ({ keywords, model }) => {
       }
 
       setRecommendations(response);
+      // setRecommendations(resume_data);
     } catch (error) {
       console.error(error);
       toast({
@@ -104,9 +112,6 @@ export const ResumeView: NextPage<ResumeViewProps> = ({ keywords, model }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-md font-bold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl lg:text-2xl">
-        Recommendations
-      </p>
       {keywords ? (
         <Form {...resumeForm}>
           <form
@@ -151,9 +156,11 @@ export const ResumeView: NextPage<ResumeViewProps> = ({ keywords, model }) => {
           </form>
         </Form>
       ) : (
-        <p className="text-lg text-gray-800 dark:text-gray-200">
-          Please generate keywords first.
-        </p>
+        <div className="flex flex-col gap-4 items-center">
+          <p className="font-semibold">
+            Please generate keywords before uploading your resume
+          </p>
+        </div>
       )}
 
       {isLoading && <Skeleton className="h-48 w-full" />}

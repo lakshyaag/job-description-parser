@@ -33,10 +33,11 @@ import { useTheme } from "next-themes";
 import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 
 interface FormProps {
-  setResultData: Dispatch<SetStateAction<JobDescription | undefined>>;
+  setJobDescData: Dispatch<SetStateAction<JobDescription | undefined>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   setModel: Dispatch<SetStateAction<Pick<RequestPayload, "model">>>;
   isLoading: boolean;
+  resultSectionRef: React.RefObject<HTMLElement>;
 }
 
 const FormSchema = z.object({
@@ -47,10 +48,11 @@ const FormSchema = z.object({
 export type RequestPayload = z.infer<typeof FormSchema>;
 
 const InputForm: NextPage<FormProps> = ({
-  setResultData,
+  setJobDescData,
   setIsLoading,
   setModel,
   isLoading,
+  resultSectionRef,
 }) => {
   const { toast } = useToast();
 
@@ -74,8 +76,8 @@ const InputForm: NextPage<FormProps> = ({
 
     try {
       const data = await analyze({ ...values });
-      setResultData(data);
-      // setResultData(result_data);
+      setJobDescData(data);
+      // setJobDescData(result_data);
       try {
         await insertJobDescription(values.context, values.model, data);
         console.log("Successfully saved query response to database.");
@@ -98,10 +100,16 @@ const InputForm: NextPage<FormProps> = ({
     }
 
     setIsLoading(false);
+
+    // Scroll to result section
+    resultSectionRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
   };
 
   return (
-    <div className="flex flex-col gap-4 w-full md:w-1/2">
+    <div className="flex flex-col gap-4 w-full">
       <p className="text-lg font-bold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl lg:text-2xl">
         Paste your job description here
       </p>
@@ -157,7 +165,7 @@ const InputForm: NextPage<FormProps> = ({
           />
 
           <SignedIn>
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading} className="w-full">
               {isLoading ? (
                 <div className="flex items-center justify-center space-x-2">
                   <span>Analyzing</span>
