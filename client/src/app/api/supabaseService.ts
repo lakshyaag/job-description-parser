@@ -1,5 +1,5 @@
 import { createSupabaseClient } from "@/lib/supabase/client";
-import { JobDescription, Keywords } from "@/lib/types";
+import { JobDescription, Keywords, Recommendations } from "@/lib/types";
 import { v4 as uuidv4 } from "uuid";
 
 const supabase = createSupabaseClient();
@@ -28,6 +28,22 @@ export async function insertKeywords(
   const { data, error } = await supabase
     .from("keywords")
     .insert({ query, model, keywords });
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function insertRecommendations(
+  resume_id: string,
+  model: string,
+  recommendations: Recommendations
+) {
+  const { data, error } = await supabase
+    .from("recommendations")
+    .insert({ resume_id, model, recommendations });
 
   if (error) {
     throw error;

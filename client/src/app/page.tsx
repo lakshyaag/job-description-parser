@@ -81,7 +81,6 @@ const Home: NextPage = () => {
                   <BreakdownView
                     jobDescription={resultData}
                     setKeywordData={setKeywordData}
-                    setActiveTab={setActiveTab}
                     model={model}
                   />
                 </TabsContent>
