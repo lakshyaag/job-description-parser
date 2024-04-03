@@ -18,17 +18,23 @@ const Header = () => {
   return (
     <header className="bg-base-100/80 sticky top-0 z-10 px-4 py-3 mx-2 backdrop-blur-lg border-b border-gray-200">
       <section className="mx-auto flex items-center justify-between">
-        <div className="flex items-center">
+        <div className="flex items-center justify-between w-full max-w-2xl">
           <Link href="/">
-            <div className="flex flex-row items-center">
-              <div className="flex flex-row gap-2 items-end text-xl font-bold md:text-2xl">
-                <span role="img" aria-label="rocket">
-                  🚀
-                </span>
-                <p>{metadata.title as ReactNode}</p>
-              </div>
+            <div className="flex items-center gap-2 text-xl font-bold md:text-2xl">
+              <span role="img" aria-label="rocket">
+                🚀
+              </span>
+              {metadata.title as ReactNode}
             </div>
           </Link>
+          <nav className="flex gap-4 mx-4">
+            <Link href="/">
+              <Button variant="link">Home</Button>
+            </Link>
+            <Link href="/user">
+              <Button variant="link">Dashboard</Button>
+            </Link>
+          </nav>
         </div>
         <div className="hidden md:flex items-center space-x-4">
           {/* Desktop menu items */}
