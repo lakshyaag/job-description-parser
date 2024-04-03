@@ -261,6 +261,7 @@ class Recommendations(BaseModel):
 
 
 class ResumePayload(BaseModel):
+    user_id: str
     resume_file_id: str
     model: str
     keywords: Keywords

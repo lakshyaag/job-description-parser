@@ -56,7 +56,7 @@ async def downloadResume(file_id: str):
 
     try:
         file_path = supabase.storage.from_("resume").create_signed_url(
-            file_id, expires_in=1200
+            path=f"{file_id}", expires_in=1200
         )["signedURL"]
 
         loader = PyPDFLoader(file_path)

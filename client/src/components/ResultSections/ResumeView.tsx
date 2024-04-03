@@ -26,6 +26,7 @@ import { Skeleton } from "../ui/skeleton";
 import ResumeRecommendationSection from "./ResumeRecommendation";
 import { useTheme } from "next-themes";
 import { resume_data } from "@/lib/utils";
+import { useAuth } from "@clerk/nextjs";
 
 interface ResumeViewProps {
   keywords: Keywords | undefined;
@@ -47,6 +48,7 @@ export const ResumeView: NextPage<ResumeViewProps> = ({
   setRecommendations,
 }) => {
   const { resolvedTheme } = useTheme();
+  const { userId } = useAuth();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -61,7 +63,7 @@ export const ResumeView: NextPage<ResumeViewProps> = ({
     setIsLoading(true);
 
     try {
-      const uploadResponse = await uploadResume(data.resume);
+      const uploadResponse = await uploadResume(data.resume, userId!);
       console.log(uploadResponse);
 
       //   // Call recommendation endpoint
@@ -73,6 +75,7 @@ export const ResumeView: NextPage<ResumeViewProps> = ({
       });
 
       const payload = {
+        user_id: userId!,
         resume_file_id: uploadResponse.path,
         model: model.model,
         keywords: keywords,

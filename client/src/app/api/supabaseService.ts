@@ -52,12 +52,12 @@ export async function insertRecommendations(
   return data;
 }
 
-export async function uploadResume(resume: File) {
+export async function uploadResume(resume: File, user_id: string) {
   const file_id = uuidv4();
 
   const { data, error } = await supabase.storage
     .from("resume")
-    .upload(file_id, resume);
+    .upload(`${user_id}/${file_id}`, resume);
 
   if (error) {
     throw error;
