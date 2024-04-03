@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { metadata } from "@/app/layout";
 import Link from "next/link";
 import Github from "../icons/GitHub";
@@ -21,9 +21,12 @@ const Header = () => {
         <div className="flex items-center">
           <Link href="/">
             <div className="flex flex-row items-center">
-              <span className="text-xl font-bold md:text-2xl">
-                {metadata.title as React.ReactNode}
-              </span>
+              <div className="flex flex-row gap-2 items-end text-xl font-bold md:text-2xl">
+                <span role="img" aria-label="rocket">
+                  🚀
+                </span>
+                <p>{metadata.title as ReactNode}</p>
+              </div>
             </div>
           </Link>
         </div>
