@@ -111,6 +111,7 @@ export interface Recommendations {
 }
 
 export interface ResumePayload {
+  user_id: string;
   resume_file_id: string;
   model: string;
   keywords: Keywords | undefined;
