@@ -1,13 +1,9 @@
 "use client";
 
 import { analyze } from "@/app/api/analyze";
-import { JobDescription } from "@/lib/types";
 import { NextPage } from "next";
-import { Dispatch, SetStateAction } from "react";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { result_data } from "@/lib/utils";
-
 import { useToast } from "./ui/use-toast";
 import { insertJobDescription } from "@/app/api/supabaseService";
 import { z } from "zod";
@@ -29,14 +25,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { LoadingSpinner } from "./icons/LoadingSpinner";
-import { useTheme } from "next-themes";
 import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { useUserStore } from "./state/userStore";
+import { result_data } from "@/lib/utils";
 
 interface FormProps {
-  setJobDescData: Dispatch<SetStateAction<JobDescription | undefined>>;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
-  setModel: Dispatch<SetStateAction<Pick<RequestPayload, "model">>>;
-  isLoading: boolean;
   resultSectionRef: React.RefObject<HTMLElement>;
 }
 
@@ -47,14 +40,10 @@ const FormSchema = z.object({
 
 export type RequestPayload = z.infer<typeof FormSchema>;
 
-const InputForm: NextPage<FormProps> = ({
-  setJobDescData,
-  setIsLoading,
-  setModel,
-  isLoading,
-  resultSectionRef,
-}) => {
+const InputForm: NextPage<FormProps> = ({ resultSectionRef }) => {
   const { toast } = useToast();
+
+  const { setModel, setIsLoading, setJobDescData, isLoading } = useUserStore();
 
   const inputForm = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -77,7 +66,9 @@ const InputForm: NextPage<FormProps> = ({
     try {
       const data = await analyze({ ...values });
       setJobDescData(data);
+
       // setJobDescData(result_data);
+
       try {
         await insertJobDescription(values.context, values.model, data);
         console.log("Successfully saved query response to database.");
@@ -102,6 +93,7 @@ const InputForm: NextPage<FormProps> = ({
     setIsLoading(false);
 
     // Scroll to result section
+
     resultSectionRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "end",

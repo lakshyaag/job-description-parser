@@ -1,14 +1,7 @@
 "use client";
 
-import { JobDescription } from "@/lib/types";
 import { NextPage } from "next";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion } from "@/components/ui/accordion";
 import JobDetailSection from "@/components/ResultSections/JobDescriptionSections/JobDetailSection";
 import ContactSection from "@/components/ResultSections/JobDescriptionSections/ContactSection";
@@ -17,14 +10,11 @@ import SkillsSection from "./JobDescriptionSections/SkillSection";
 import EducationSection from "./JobDescriptionSections/EducationSection";
 import CompanyInfoSection from "./JobDescriptionSections/CompanySection";
 import JobDetailsBadges from "./JobDescriptionSections/JobDetailBadges";
+import { useUserStore } from "../state/userStore";
 
-interface BreakdownViewProps {
-  jobDescription: JobDescription;
-}
+export const BreakdownView: NextPage = ({}) => {
+  const { jobDescData } = useUserStore();
 
-export const BreakdownView: NextPage<BreakdownViewProps> = ({
-  jobDescription,
-}) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-4">
@@ -33,21 +23,21 @@ export const BreakdownView: NextPage<BreakdownViewProps> = ({
             <div className="flex flex-col">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold text-gray-800 dark:text-white">
-                  {jobDescription.title}
+                  {jobDescData!.title}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <JobDetailsBadges
-                  industry={jobDescription.industry}
-                  location={jobDescription.location}
+                  industry={jobDescData!.industry}
+                  location={jobDescData!.location}
                   years_of_experience_required={
-                    jobDescription.years_of_experience_required
+                    jobDescData!.years_of_experience_required
                   }
                   years_of_experience_preferred={
-                    jobDescription.years_of_experience_preferred
+                    jobDescData!.years_of_experience_preferred
                   }
-                  job_type={jobDescription.job_type}
-                  salary_range={jobDescription.salary_range}
+                  job_type={jobDescData!.job_type}
+                  salary_range={jobDescData!.salary_range}
                 />
               </CardContent>
             </div>
@@ -55,46 +45,45 @@ export const BreakdownView: NextPage<BreakdownViewProps> = ({
 
           <Accordion type="single" collapsible>
             <CompanyInfoSection
-              company_information={jobDescription.company_information}
-              culture={jobDescription.culture}
+              company_information={jobDescData!.company_information}
+              culture={jobDescData!.culture}
             />
 
             <JobDetailSection
               title="Responsibilities"
-              content={jobDescription.responsibilities}
+              content={jobDescData!.responsibilities}
             />
 
             <QualificationsSection
-              qualifications_required={jobDescription.qualifications_required}
-              qualifications_preferred={jobDescription.qualifications_preferred}
+              qualifications_required={jobDescData!.qualifications_required}
+              qualifications_preferred={jobDescData!.qualifications_preferred}
             />
 
-            {jobDescription.education &&
-              jobDescription.education.length > 0 && (
-                <EducationSection education={jobDescription.education} />
-              )}
+            {jobDescData!.education && jobDescData!.education.length > 0 && (
+              <EducationSection education={jobDescData!.education} />
+            )}
 
-            <SkillsSection skills={jobDescription.skills} />
+            <SkillsSection skills={jobDescData!.skills} />
 
             <JobDetailSection
               title="Experience"
-              content={jobDescription.experience}
+              content={jobDescData!.experience}
             />
 
             <JobDetailSection
               title="Benefits"
-              content={jobDescription.benefits}
+              content={jobDescData!.benefits}
             />
 
-            {jobDescription.contact_information && (
+            {jobDescData!.contact_information && (
               <ContactSection
-                contact_information={jobDescription.contact_information}
+                contact_information={jobDescData!.contact_information}
               />
             )}
 
             <JobDetailSection
               title="Additional Requirements"
-              content={jobDescription.additional_requirements}
+              content={jobDescData!.additional_requirements}
             />
           </Accordion>
         </div>

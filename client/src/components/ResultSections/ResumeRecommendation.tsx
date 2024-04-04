@@ -6,32 +6,28 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import ReactDiffViewer, { DiffMethod } from "react-diff-viewer-continued";
-
 import { Recommendation, Recommendations } from "@/lib/types";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "../ui/collapsible";
+} from "@/components/ui/collapsible";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from "@/components/ui/card";
+import ReactDiffViewer, { DiffMethod } from "react-diff-viewer-continued";
 
 type ResumeRecommendationProps = {
   recommendations: Recommendations;

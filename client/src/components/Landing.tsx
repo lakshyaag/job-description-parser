@@ -19,10 +19,10 @@ const Landing: NextPage = () => {
         </li>
       </ol>
       <p className="text-gray-600 dark:text-gray-100 text-lg">
-        With JobFind, you&apos;ll gain valuable insights into job requirements,
-        discover essential keywords to include in your resume, and receive
-        tailored suggestions to make your application stand out. Take control of
-        your job search today!
+        With JD Interpreter, you&apos;ll gain valuable insights into job
+        requirements, discover essential keywords to include in your resume, and
+        receive tailored suggestions to make your application stand out. Take
+        control of your job search today!
       </p>
     </>
   );
