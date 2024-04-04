@@ -2,27 +2,26 @@
 
 import { NextPage } from "next";
 import { useEffect, useRef, useState } from "react";
-import { JobDescription, Keywords, Recommendations } from "@/lib/types";
-import InputForm, { RequestPayload } from "@/components/InputForm";
+import InputForm from "@/components/InputForm";
 import BreakdownView from "@/components/ResultSections/BreakdownView";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { KeywordView } from "@/components/ResultSections/KeywordView";
-import Loading from "@/components/Loading";
 import { ResumeView } from "@/components/ResultSections/ResumeView";
 import Landing from "@/components/Landing";
+import { useUserStore } from "@/components/state/userStore";
+import { Skeleton } from "@/components/ui/skeleton";
+import { health } from "./api/health";
 
 const Home: NextPage = () => {
-  const [jobDescData, setJobDescData] = useState<JobDescription>();
-  const [keywordData, setKeywordData] = useState<Keywords>();
-  const [recommendations, setRecommendations] = useState<Recommendations>();
+  const { jobDescData, isLoading } = useUserStore();
 
   const [activeTab, setActiveTab] = useState<string>("breakdown");
-  const [model, setModel] = useState<Pick<RequestPayload, "model">>({
-    model: "gpt-3.5-turbo",
-  });
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const resultSectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const healthCheck = health();
+  }, []);
 
   return (
     <main className="min-h-screen w-full dark:bg-black bg-white  dark:bg-dot-white/[0.1] bg-dot-black/[0.1] --font-sans">
@@ -33,13 +32,7 @@ const Home: NextPage = () => {
               <Landing />
             </div>
             <div className="w-full md:w-1/2">
-              <InputForm
-                setJobDescData={setJobDescData}
-                setIsLoading={setIsLoading}
-                setModel={setModel}
-                isLoading={isLoading}
-                resultSectionRef={resultSectionRef}
-              />
+              <InputForm resultSectionRef={resultSectionRef} />
             </div>
           </div>
         </div>
@@ -47,7 +40,15 @@ const Home: NextPage = () => {
       <section ref={resultSectionRef} className="py-2 md:py-4">
         <div className="container mx-auto px-4 md:px-8">
           {isLoading ? (
-            <Loading />
+            <div className="flex flex-col gap-4 w-full">
+              <p className="text-lg font-bold text-gray-800 dark:text-gray-200 sm:text-lg md:text-xl lg:text-2xl animate-pulse">
+                Please wait...
+              </p>
+              <div className="w-full space-y-2">
+                <Skeleton className="h-48 w-full" />
+                <Skeleton className="h-32 w-full" />
+              </div>
+            </div>
           ) : jobDescData ? (
             <div className="mx-auto">
               <Tabs value={activeTab}>
@@ -75,23 +76,13 @@ const Home: NextPage = () => {
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="breakdown">
-                  <BreakdownView jobDescription={jobDescData} />
+                  <BreakdownView />
                 </TabsContent>
                 <TabsContent value="keywords">
-                  <KeywordView
-                    jobDescription={jobDescData}
-                    keywordData={keywordData}
-                    setKeywordData={setKeywordData}
-                    model={model}
-                  />
+                  <KeywordView />
                 </TabsContent>
                 <TabsContent value="resume">
-                  <ResumeView
-                    keywords={keywordData}
-                    model={model}
-                    recommendations={recommendations}
-                    setRecommendations={setRecommendations}
-                  />
+                  <ResumeView />
                 </TabsContent>
               </Tabs>
             </div>

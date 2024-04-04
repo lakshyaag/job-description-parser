@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import Header from "./Header";
 import Footer from "./Footer";
-import { Toaster } from "../ui/toaster";
+import { Toaster } from "@/components/ui/toaster";
 
 type LayoutProps = {
   children: ReactNode;

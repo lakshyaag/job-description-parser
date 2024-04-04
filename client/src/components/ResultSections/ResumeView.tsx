@@ -1,4 +1,3 @@
-import { Keywords, Recommendations } from "@/lib/types";
 import { NextPage } from "next";
 
 import {
@@ -9,31 +8,22 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { LoadingSpinner } from "../icons/LoadingSpinner";
 import { insertRecommendations, uploadResume } from "@/app/api/supabaseService";
 import { recommend } from "@/app/api/recommend";
-import { RequestPayload } from "../InputForm";
-import { useToast } from "../ui/use-toast";
-import Loading from "../Loading";
-import { Skeleton } from "../ui/skeleton";
+import { useToast } from "@/components/ui/use-toast";
+import { Skeleton } from "@/components/ui/skeleton";
 import ResumeRecommendationSection from "./ResumeRecommendation";
 import { useTheme } from "next-themes";
-import { resume_data } from "@/lib/utils";
 import { useAuth } from "@clerk/nextjs";
-
-interface ResumeViewProps {
-  keywords: Keywords | undefined;
-  model: Pick<RequestPayload, "model">;
-  recommendations: Recommendations | undefined;
-  setRecommendations: Dispatch<SetStateAction<Recommendations | undefined>>;
-}
+import { useUserStore } from "@/components/state/userStore";
+import { resume_data } from "@/lib/utils";
 
 const FormSchema = z.object({
   resume: z
@@ -41,14 +31,11 @@ const FormSchema = z.object({
     .refine((file) => file.type === "application/pdf", "Invalid file type"),
 });
 
-export const ResumeView: NextPage<ResumeViewProps> = ({
-  keywords,
-  model,
-  recommendations,
-  setRecommendations,
-}) => {
+export const ResumeView: NextPage = ({}) => {
   const { resolvedTheme } = useTheme();
   const { userId } = useAuth();
+  const { keywordData, model, recommendations, setRecommendations } =
+    useUserStore();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -78,7 +65,7 @@ export const ResumeView: NextPage<ResumeViewProps> = ({
         user_id: userId!,
         resume_file_id: uploadResponse.path,
         model: model.model,
-        keywords: keywords,
+        keywords: keywordData,
       };
 
       const response = await recommend(payload);
@@ -115,7 +102,7 @@ export const ResumeView: NextPage<ResumeViewProps> = ({
 
   return (
     <div className="flex flex-col gap-4">
-      {keywords ? (
+      {keywordData ? (
         <Form {...resumeForm}>
           <form
             onSubmit={resumeForm.handleSubmit(onSubmit)}

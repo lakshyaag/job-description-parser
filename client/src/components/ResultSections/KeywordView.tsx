@@ -1,35 +1,23 @@
-import { JobDescription, Keywords } from "@/lib/types";
 import { NextPage } from "next";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "../icons/LoadingSpinner";
-import { Dispatch, SetStateAction, useState } from "react";
-import { useToast } from "../ui/use-toast";
+import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
 import { insertKeywords } from "@/app/api/supabaseService";
-import { RequestPayload } from "../InputForm";
-import { keywords as queryKeywords } from "@/app/api/keywords";
+import { keywords } from "@/app/api/keywords";
+import { useUserStore } from "@/components/state/userStore";
 import { keywords_data } from "@/lib/utils";
-interface KeywordViewProps {
-  jobDescription: JobDescription;
-  keywordData: Keywords | undefined;
-  setKeywordData: Dispatch<SetStateAction<Keywords | undefined>>;
-  model: Pick<RequestPayload, "model">;
-}
 
-export const KeywordView: NextPage<KeywordViewProps> = ({
-  jobDescription,
-  keywordData,
-  setKeywordData,
-  model,
-}) => {
+export const KeywordView: NextPage = ({}) => {
+  const { setKeywordData, jobDescData, model, keywordData } = useUserStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { toast } = useToast();
@@ -45,15 +33,15 @@ export const KeywordView: NextPage<KeywordViewProps> = ({
 
     const payload = {
       context: JSON.stringify({
-        responsibilities: jobDescription.responsibilities,
-        required_qualifications: jobDescription.qualifications_required,
-        skills: jobDescription.skills,
+        responsibilities: jobDescData!.responsibilities,
+        required_qualifications: jobDescData!.qualifications_required,
+        skills: jobDescData!.skills,
       }),
       model: model.model,
     };
 
     try {
-      const data = await queryKeywords(payload);
+      const data = await keywords(payload);
       setKeywordData(data);
 
       try {
@@ -67,6 +55,7 @@ export const KeywordView: NextPage<KeywordViewProps> = ({
           variant: "destructive",
         });
       }
+
       // setKeywordData(keywords_data);
     } catch (error) {
       console.error("Error:", error);
