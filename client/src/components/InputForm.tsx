@@ -28,6 +28,7 @@ import { LoadingSpinner } from "./icons/LoadingSpinner";
 import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import { useUserStore } from "@/components/state/userStore";
 import { result_data } from "@/lib/utils";
+import { incrementUsage } from "@/app/api/usage";
 
 interface FormProps {
   resultSectionRef: React.RefObject<HTMLElement>;
@@ -80,12 +81,15 @@ const InputForm: NextPage<FormProps> = ({ resultSectionRef }) => {
 
       try {
         await insertJobDescription(values.context, values.model, data);
+        await incrementUsage(values.model);
+
         console.log("Successfully saved query response to database.");
       } catch (error) {
         console.error("Failed to save query response to database:", error);
         toast({
           title: "Error",
-          description: "Failed to save your query. Please try again.",
+          description:
+            "Failed to save your query. Usage has not been counted. Please try again.",
           variant: "destructive",
         });
       }
@@ -94,7 +98,7 @@ const InputForm: NextPage<FormProps> = ({ resultSectionRef }) => {
       toast({
         title: "Error",
         description:
-          "Failed to analyze your job description. Please try again.",
+          "Failed to analyze your job description. Usage has not been counted. Please try again.",
         variant: "destructive",
       });
     }
