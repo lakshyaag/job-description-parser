@@ -7,7 +7,7 @@ import uvicorn
 from dotenv import find_dotenv, load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 from langsmith import traceable
 from langsmith.wrappers import wrap_openai
 from models import (
@@ -102,7 +102,7 @@ async def call(
         raise HTTPException(status_code=500, detail=f"Internal Server Error. {str(e)}")
 
 
-@traceable("extract")
+@traceable(name="extract")
 @app.post("/jd/", response_model=JobDescription)
 async def process_job_description(request: RequestPayload) -> JobDescription:
     logger.info("Extracting job description fields...")
@@ -113,7 +113,7 @@ async def process_job_description(request: RequestPayload) -> JobDescription:
     return response
 
 
-@traceable("keywords")
+@traceable(name="keywords")
 @app.post("/keywords/", response_model=Keywords)
 async def extract_keywords(request: RequestPayload) -> Keywords:
     logger.info("Extracting keywords from job description...")
@@ -124,7 +124,7 @@ async def extract_keywords(request: RequestPayload) -> Keywords:
     return response
 
 
-@traceable("recommendations")
+@traceable(name="recommendations")
 @app.post("/recommendations/", response_model=Recommendations)
 async def generate_recommendations(request: ResumePayload) -> Recommendations:
     logger.info("Generating recommendations for resume...")
@@ -139,6 +139,11 @@ async def generate_recommendations(request: ResumePayload) -> Recommendations:
     response = await call(llm_client, Recommendations, messages, model=request.model)
 
     return response
+
+
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
 
 
 @app.get("/")

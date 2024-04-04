@@ -1,7 +1,7 @@
 "use client";
 
 import { NextPage } from "next";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InputForm from "@/components/InputForm";
 import BreakdownView from "@/components/ResultSections/BreakdownView";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,6 +10,7 @@ import { ResumeView } from "@/components/ResultSections/ResumeView";
 import Landing from "@/components/Landing";
 import { useUserStore } from "@/components/state/userStore";
 import { Skeleton } from "@/components/ui/skeleton";
+import { health } from "./api/health";
 
 const Home: NextPage = () => {
   const { jobDescData, isLoading } = useUserStore();
@@ -17,6 +18,10 @@ const Home: NextPage = () => {
   const [activeTab, setActiveTab] = useState<string>("breakdown");
 
   const resultSectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const healthCheck = health();
+  }, []);
 
   return (
     <main className="min-h-screen w-full dark:bg-black bg-white  dark:bg-dot-white/[0.1] bg-dot-black/[0.1] --font-sans">
