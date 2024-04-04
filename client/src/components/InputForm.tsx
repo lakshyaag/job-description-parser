@@ -43,7 +43,14 @@ export type RequestPayload = z.infer<typeof FormSchema>;
 const InputForm: NextPage<FormProps> = ({ resultSectionRef }) => {
   const { toast } = useToast();
 
-  const { setModel, setIsLoading, setJobDescData, isLoading } = useUserStore();
+  const {
+    setModel,
+    setIsLoading,
+    setJobDescData,
+    isLoading,
+    setKeywordData,
+    setRecommendations,
+  } = useUserStore();
 
   const inputForm = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -66,6 +73,8 @@ const InputForm: NextPage<FormProps> = ({ resultSectionRef }) => {
     try {
       const data = await analyze({ ...values });
       setJobDescData(data);
+      setKeywordData(undefined);
+      setRecommendations(undefined);
 
       // setJobDescData(result_data);
 
