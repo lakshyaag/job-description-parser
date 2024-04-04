@@ -5,7 +5,7 @@ import { NextPage } from "next";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { insertJobDescription } from "@/app/api/supabaseService";
+import { insertJobDescription, supabase } from "@/app/api/supabaseService";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,7 +20,9 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -28,8 +30,8 @@ import { LoadingSpinner } from "./icons/LoadingSpinner";
 import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import { useUserStore } from "@/components/state/userStore";
 import { result_data } from "@/lib/utils";
-import { incrementUsage } from "@/app/api/usage";
-
+import { getUsage, incrementUsage } from "@/app/api/usage";
+import UsageTracker from "./UsageTracker";
 interface FormProps {
   resultSectionRef: React.RefObject<HTMLElement>;
 }
@@ -55,10 +57,6 @@ const InputForm: NextPage<FormProps> = ({ resultSectionRef }) => {
 
   const inputForm = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: {
-      context: "",
-      model: "gpt-3.5-turbo",
-    },
   });
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
@@ -155,8 +153,13 @@ const InputForm: NextPage<FormProps> = ({ resultSectionRef }) => {
                       <SelectValue placeholder="Select a model" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="gpt-3.5-turbo">GPT-3.5</SelectItem>
-                      <SelectItem value="gpt-4-turbo-preview">GPT-4</SelectItem>
+                      <SelectGroup>
+                        <SelectLabel>Select a model</SelectLabel>
+                        <SelectItem value="gpt-3.5-turbo">GPT-3.5</SelectItem>
+                        <SelectItem value="gpt-4-turbo-preview">
+                          GPT-4
+                        </SelectItem>
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -170,16 +173,26 @@ const InputForm: NextPage<FormProps> = ({ resultSectionRef }) => {
           />
 
           <SignedIn>
-            <Button type="submit" disabled={isLoading} className="w-full">
-              {isLoading ? (
-                <div className="flex items-center justify-center space-x-2">
-                  <span>Analyzing</span>
-                  <LoadingSpinner />
-                </div>
-              ) : (
-                <div>Analyze</div>
-              )}{" "}
-            </Button>
+            <div className="flex flex-col gap-2">
+              <Button type="submit" disabled={isLoading} className="w-full">
+                {isLoading ? (
+                  <div className="flex items-center justify-center space-x-2">
+                    <span>Analyzing</span>
+                    <LoadingSpinner />
+                  </div>
+                ) : (
+                  <div>Analyze</div>
+                )}{" "}
+              </Button>
+              {inputForm.watch("model") && (
+                <Button type="button" variant={"link"} className="w-full">
+                  <UsageTracker
+                    model={inputForm.watch("model")}
+                    isLoading={isLoading}
+                  />
+                </Button>
+              )}
+            </div>
           </SignedIn>
 
           <SignedOut>

@@ -13,3 +13,16 @@ export async function incrementUsage(model: string) {
 
   return data;
 }
+
+export async function getUsage(model: string) {
+  const { data, error } = await supabase
+    .from("usage")
+    .select("*")
+    .eq("model", model);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
