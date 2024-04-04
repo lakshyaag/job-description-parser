@@ -12,8 +12,10 @@ import { ClerkProvider } from "@clerk/nextjs";
 const APP_NAME = "JD Interpreter";
 const APP_DESCRIPTION =
   "Supercharge your job search with JD Interpreter. Get a detailed breakdown of job descriptions, discover essential keywords to include in your resume, and receive tailored suggestions to make your application stand out. Take control of your job search today!";
+const APP_URL = "https://job-description-parser.vercel.app/";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(APP_URL),
   title: APP_NAME,
   description: APP_DESCRIPTION,
 
@@ -28,15 +30,26 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    url: "https://job-description-parser.vercel.app/",
+    url: APP_URL,
     title: APP_NAME,
     description: APP_DESCRIPTION,
+    type: "website",
+    locale: "en_US",
+    images: `og-image.png`,
   },
 
   twitter: {
     creator: "@lakshyaag",
     card: "summary_large_image",
+    images: `/og-image.png`,
   },
+
+  keywords: [
+    "Job Description",
+    "Resume Optimization",
+    "Job Search",
+    "AI Tools",
+  ],
 };
 
 export const viewport: Viewport = {
