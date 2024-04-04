@@ -10,7 +10,7 @@ import SkillsSection from "./JobDescriptionSections/SkillSection";
 import EducationSection from "./JobDescriptionSections/EducationSection";
 import CompanyInfoSection from "./JobDescriptionSections/CompanySection";
 import JobDetailsBadges from "./JobDescriptionSections/JobDetailBadges";
-import { useUserStore } from "../state/userStore";
+import { useUserStore } from "@/components/state/userStore";
 
 export const BreakdownView: NextPage = ({}) => {
   const { jobDescData } = useUserStore();

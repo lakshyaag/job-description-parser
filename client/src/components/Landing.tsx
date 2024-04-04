@@ -10,7 +10,7 @@ const Landing: NextPage = () => {
         Job searching made simple in just three easy steps:
       </p>
       <ol className="list-decimal list-inside text-gray-600 dark:text-gray-100 text-lg mb-8">
-        <li className="list-item">Paste your job description</li>
+        <li className="list-item">Paste any job description</li>
         <li className="list-item">
           Get a detailed breakdown and personalized recommendations
         </li>

@@ -2,9 +2,9 @@
 
 import { analyze } from "@/app/api/analyze";
 import { NextPage } from "next";
-import { Textarea } from "./ui/textarea";
-import { Button } from "./ui/button";
-import { useToast } from "./ui/use-toast";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import { insertJobDescription } from "@/app/api/supabaseService";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -16,7 +16,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from "./ui/form";
+} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/select";
 import { LoadingSpinner } from "./icons/LoadingSpinner";
 import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
-import { useUserStore } from "./state/userStore";
+import { useUserStore } from "@/components/state/userStore";
 import { result_data } from "@/lib/utils";
 
 interface FormProps {

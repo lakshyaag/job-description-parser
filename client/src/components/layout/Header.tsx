@@ -10,8 +10,12 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
-import { Button } from "../ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 
 const Header = () => {

@@ -7,13 +7,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "../icons/LoadingSpinner";
 import { useState } from "react";
-import { useToast } from "../ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { insertKeywords } from "@/app/api/supabaseService";
 import { keywords } from "@/app/api/keywords";
-import { useUserStore } from "../state/userStore";
+import { useUserStore } from "@/components/state/userStore";
 import { keywords_data } from "@/lib/utils";
 
 export const KeywordView: NextPage = ({}) => {

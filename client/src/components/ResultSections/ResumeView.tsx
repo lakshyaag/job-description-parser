@@ -11,18 +11,18 @@ import {
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { LoadingSpinner } from "../icons/LoadingSpinner";
 import { insertRecommendations, uploadResume } from "@/app/api/supabaseService";
 import { recommend } from "@/app/api/recommend";
-import { useToast } from "../ui/use-toast";
-import { Skeleton } from "../ui/skeleton";
+import { useToast } from "@/components/ui/use-toast";
+import { Skeleton } from "@/components/ui/skeleton";
 import ResumeRecommendationSection from "./ResumeRecommendation";
 import { useTheme } from "next-themes";
 import { useAuth } from "@clerk/nextjs";
-import { useUserStore } from "../state/userStore";
+import { useUserStore } from "@/components/state/userStore";
 import { resume_data } from "@/lib/utils";
 
 const FormSchema = z.object({
