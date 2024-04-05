@@ -3,6 +3,7 @@ import { LIMITS } from "@/lib/utils";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { useUserStore } from "./state/userStore";
+import { Button } from "./ui/button";
 
 interface UsageTrackerProps {
   model: string;
@@ -30,8 +31,10 @@ const UsageTracker: NextPage<UsageTrackerProps> = ({ model, isLoading }) => {
     fetchUsage();
   }, [model, isLoading, setUsage]);
   return (
-    <div className="text-sm dark:text-gray-200 text-gray-800 font-bold">
-      Usage: {usage} / {LIMITS[model as keyof typeof LIMITS]}
+    <div className="text-sm dark:text-gray-200 text-gray-800 font-bold mt-8">
+      <Button type="button" variant={"link"} className="w-full">
+        Interpreter Usage: {usage} / {LIMITS[model as keyof typeof LIMITS]}
+      </Button>
     </div>
   );
 };
