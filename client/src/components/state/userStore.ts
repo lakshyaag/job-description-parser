@@ -13,6 +13,8 @@ interface UserState {
   setIsLoading: (loading: boolean) => void;
   model: Pick<RequestPayload, "model">;
   setModel: (model: Pick<RequestPayload, "model">) => void;
+  usage: number;
+  setUsage: (usage: number) => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -26,4 +28,6 @@ export const useUserStore = create<UserState>((set) => ({
   setIsLoading: (loading) => set({ isLoading: loading }),
   model: { model: "gpt-3.5-turbo" },
   setModel: (model) => set({ model }),
+  usage: 0,
+  setUsage: (usage) => set({ usage }),
 }));

@@ -10,6 +10,11 @@ export const API_URL =
     ? process.env.NEXT_PUBLIC_API_URL
     : "http://localhost:8000";
 
+export const LIMITS = {
+  "gpt-3.5-turbo": 100,
+  "gpt-4-turbo-preview": 10,
+};
+
 export const result_data = {
   title: "Associate Manager, Drive New Verticals S&O Canada",
   company_information:
